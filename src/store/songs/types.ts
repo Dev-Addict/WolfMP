@@ -9,6 +9,7 @@ export interface Song {
     isFav: boolean
     lrcUri?: string
     coverUri?: string
+    videoUri?: string
     uri: string
     duration: number
 }
