@@ -4,11 +4,11 @@
     "slug": "WolfMP",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/wolf-icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/wolf-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#33383d"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
