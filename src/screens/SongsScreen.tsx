@@ -1,10 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 import {View, Text} from "react-native";
 
+import SearchBox from "../components/helpers/SearchBox";
+
 const SongsScreen = () => {
+    const [searchValue, setSearchValue] = useState('');
+
     return (
         <View>
-            <Text>SongsScreen</Text>
+            <SearchBox value={searchValue} setValue={setSearchValue}/>
         </View>
     );
 };

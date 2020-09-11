@@ -1,10 +1,14 @@
-import React from "react";
-import {View, Text} from "react-native";
+import React, {useState} from "react";
+import {View} from "react-native";
+
+import SearchBox from "../components/helpers/SearchBox";
 
 const GenresScreen = () => {
+    const [searchValue, setSearchValue] = useState('');
+
     return (
         <View>
-            <Text>GenresScreen</Text>
+            <SearchBox value={searchValue} setValue={setSearchValue}/>
         </View>
     );
 };

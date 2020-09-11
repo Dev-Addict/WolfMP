@@ -14,8 +14,23 @@ const styles = StyleSheet.create({
         flex: 5,
         backgroundColor: '#262A2F',
         justifyContent: 'space-around',
-        height: '100%',
-        alignItems: 'center'
+        height: Dimensions.get('window').height,
+        alignItems: 'center',
+        paddingVertical: 20,
+        paddingHorizontal: 5
+    },
+    input: {
+        backgroundColor: '#5C80BC22',
+        color: '#D3D4D6',
+        fontSize: 18,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 30,
+        marginHorizontal: 10,
+        width: Dimensions.get('window').width - Dimensions.get('window').width * 5 / 21 - 20 - 50
+    },
+    inputFocused: {
+        backgroundColor: '#5C80BC44'
     }
 });
 
