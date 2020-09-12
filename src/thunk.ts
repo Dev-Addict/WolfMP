@@ -69,6 +69,10 @@ export const thunkInitializeApp = (): AppThunk<void> => async dispatch => {
         }
     }
 
+    songs.sort((s1, s2) => {
+        return s1.title.localeCompare(s2.title);
+    });
+
     dispatch(setSongs(songs));
 
     dispatch(setLoadingState(false));

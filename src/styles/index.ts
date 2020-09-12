@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
         fontFamily: 'consolas'
     },
     sideBar: {
-        flex: 5,
+        flex: 3,
         backgroundColor: '#262A2F',
         justifyContent: 'space-around',
         height: Dimensions.get('window').height,
@@ -20,17 +20,29 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5
     },
     input: {
-        backgroundColor: '#5C80BC22',
+        backgroundColor: '#D3D4D622',
         color: '#D3D4D6',
-        fontSize: 18,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
+        fontSize: 12,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
         borderRadius: 30,
         marginHorizontal: 10,
-        width: Dimensions.get('window').width - Dimensions.get('window').width * 5 / 21 - 20 - 50
+        width: Dimensions.get('window').width - Dimensions.get('window').width * 3 / 21 - 20 - 50
     },
     inputFocused: {
-        backgroundColor: '#5C80BC44'
+        backgroundColor: '#D3D4D644'
+    },
+    songItem: {
+        flexDirection: 'row',
+        marginHorizontal: 10,
+        paddingBottom: 5,
+        marginVertical: 5,
+        borderBottomColor: '#D3D4D6',
+        borderBottomWidth: 2,
+        overflow: 'hidden'
+    },
+    icon: {
+        marginHorizontal: 10
     }
 });
 
