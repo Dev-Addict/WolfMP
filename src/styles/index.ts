@@ -43,6 +43,13 @@ const styles = StyleSheet.create({
     },
     icon: {
         marginHorizontal: 10
+    },
+    centerContainer: {
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#33383D'
     }
 });
 

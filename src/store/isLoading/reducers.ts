@@ -9,7 +9,7 @@ export const isLoadingReducer = (
     action: IsLoadingActionTypes
 ) => {
     switch (action.type) {
-        case "SET_LOAD":
+        case SET_LOADING_STATE:
             return action.payload;
         default:
             return state;
