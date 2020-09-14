@@ -10,13 +10,12 @@ import MusicInfo from "./utils/MusicInfo";
 import {getSongs, insertSong} from './db';
 import {SQLResultSet} from "expo-sqlite";
 import {Song} from "./store/songs/types";
+import SettingsST from "./models/SettingsST";
 
-export type AppThunk<ReturnType = void> = ThunkAction<
-    ReturnType,
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType,
     RootState,
     unknown,
-    Action<string>
-    >
+    Action<string>>
 
 export const thunkInitializeApp = (): AppThunk<void> => async dispatch => {
     dispatch(setLoadingState(true));
@@ -44,7 +43,12 @@ export const thunkInitializeApp = (): AppThunk<void> => async dispatch => {
     for (const audio of audios) {
         if (dbSongs.map(({clientId}: any) => clientId.toString()).includes(audio.id)) {
             const dbSong = dbSongs.find(({clientId}: any) => clientId.toString() === audio.id);
-            songs.push({...dbSong, isExcluded: dbSong.isExcluded === 'yes', isFav: dbSong.isFav === 'yes', id: audio.id});
+            songs.push({
+                ...dbSong,
+                isExcluded: dbSong.isExcluded === 'yes',
+                isFav: dbSong.isFav === 'yes',
+                id: audio.id
+            });
         } else {
             const musicInfo = await MusicInfo.getMusicInfoAsync(audio.uri);
             const song = {

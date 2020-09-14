@@ -16,6 +16,7 @@
     "base-64": "^0.1.0",
     "d3-shape": "^2.0.0",
     "expo": "~38.0.8",
+    "expo-av": "~8.2.1",
     "expo-file-system": "~9.0.1",
     "expo-media-library": "~8.2.1",
     "expo-sqlite": "~8.2.1",
