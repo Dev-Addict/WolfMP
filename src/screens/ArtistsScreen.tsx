@@ -1,14 +1,16 @@
-import React, {useState} from "react";
+import React, {FC} from "react";
 import {View} from "react-native";
 
-import SearchBox from "../components/helpers/SearchBox";
+import ArtistList from "../components/helpers/Song/ArtistList";
 
-const ArtistsScreen = () => {
-    const [searchValue, setSearchValue] = useState('');
+type Props = {
+    navigation: any;
+};
 
+const ArtistsScreen: FC<Props> = ({navigation}) => {
     return (
         <View>
-            <SearchBox value={searchValue} setValue={setSearchValue}/>
+            <ArtistList navigation={navigation}/>
         </View>
     );
 };
