@@ -1,5 +1,5 @@
 import React, {FC, useState} from "react";
-import {Dimensions, FlatList, View} from "react-native";
+import {FlatList} from "react-native";
 import {useSelector} from "react-redux";
 
 import {RootState} from "../../../store";
@@ -7,6 +7,7 @@ import {Song} from "../../../store/songs/types";
 import SongItem from "./SongItem";
 import SearchBox from "../SearchBox";
 import AlbumList from "./AlbumList";
+import filterSongs from "../../../utils/filterSongs";
 
 type Props = {
     navigation: any;
@@ -17,7 +18,8 @@ const SongsList: FC<Props> = ({navigation, route}) => {
     const [searchValue, setSearchValue] = useState('');
 
     let songs = useSelector(({songs: {songs}}: RootState) => songs);
-    let albums;
+
+    songs = filterSongs(songs, searchValue);
 
     if (route?.params?.isFromAlbumScreen) {
         songs = songs.filter(song => song.album === route.params.album);

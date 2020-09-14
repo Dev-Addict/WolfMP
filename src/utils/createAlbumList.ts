@@ -10,7 +10,7 @@ const createAlbumList = (albumNameList: (string | undefined)[], songs: Song[]): 
             .map(song => song.album))).length,
         artists: Array.from(new Set(
             songs.filter(song => song.album?.startsWith(albumName!)).map(song => song.artist || 'unknown')))
-    })).sort((a1, a2) => a1.name.localeCompare(a2.name));
+    })).sort((a1, a2) => a1.name.toLowerCase().localeCompare(a2.name.toLowerCase()));
 };
 
 export default createAlbumList;

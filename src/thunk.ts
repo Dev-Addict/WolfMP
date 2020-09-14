@@ -70,7 +70,7 @@ export const thunkInitializeApp = (): AppThunk<void> => async dispatch => {
     }
 
     songs.sort((s1, s2) => {
-        return s1.title.localeCompare(s2.title);
+        return s1.title.toLowerCase().localeCompare(s2.title.toLowerCase());
     });
 
     dispatch(setSongs(songs));

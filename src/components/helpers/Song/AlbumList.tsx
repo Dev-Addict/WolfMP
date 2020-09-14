@@ -1,5 +1,5 @@
 import React, {FC, useState} from "react";
-import {Dimensions, FlatList} from "react-native";
+import {FlatList} from "react-native";
 import {useSelector} from "react-redux";
 
 import {RootState} from "../../../store";
@@ -7,6 +7,7 @@ import Album from "../../../models/Album";
 import AlbumItem from "./AlbumItem";
 import SearchBox from "../SearchBox";
 import createAlbumList from "../../../utils/createAlbumList";
+import filterAlbums from "../../../utils/filterAlbums";
 
 type Props = {
     navigation: any;
@@ -32,6 +33,8 @@ const AlbumList: FC<Props> = ({navigation, leadAlbum}) => {
         albums[unknownIndex].artists = Array.from(new Set(
             songs.filter(song => !song.album).map(song => song.artist || 'unknown')));
     }
+
+    albums = filterAlbums(albums, searchValue);
 
     return (
         <>
