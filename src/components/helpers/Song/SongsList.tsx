@@ -32,6 +32,10 @@ const SongsList: FC<Props> = ({navigation, route}) => {
         songs = songs.filter(song => song.artist === route.params.artist);
     }
 
+    if (route?.params?.isFromGenreScreen) {
+        songs = songs.filter(song => song.genre === route.params.genre);
+    }
+
     return (
         <>
             <SearchBox value={searchValue} setValue={setSearchValue}/>

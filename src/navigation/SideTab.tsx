@@ -37,6 +37,19 @@ const Artists = () => {
     );
 };
 
+const GenresStack = createStackNavigator();
+
+const Genres = () => {
+    return (
+        <GenresStack.Navigator screenOptions={{
+            headerShown: false
+        }}>
+            <GenresStack.Screen name="Genres" component={GenresScreen}/>
+            <GenresStack.Screen name="Songs" component={SongsScreen}/>
+        </GenresStack.Navigator>
+    );
+};
+
 const SideTabNavigator = createSideTabBar();
 
 const SideTab = () => {
@@ -51,7 +64,7 @@ const SideTab = () => {
             <SideTabNavigator.Screen name="Artists" component={Artists} options={{
                 icon: ({color, size}) => (<MaterialCommunityIcons name="artist" size={size} color={color}/>)
             }}/>
-            <SideTabNavigator.Screen name="Genres" component={GenresScreen} options={{
+            <SideTabNavigator.Screen name="Genres" component={Genres} options={{
                 icon: ({color, size}) => (<FontAwesome5 name="compact-disc" size={size} color={color}/>)
             }}/>
             <SideTabNavigator.Screen name="Playlists" component={PlaylistsScreen} options={{
