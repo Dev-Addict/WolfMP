@@ -9,24 +9,37 @@ import ArtistItem from "./ArtistItem";
 
 type Props = {
     navigation: any;
+    isFromAlbum?: boolean;
+    albumArtists?: string;
 };
 
-const ArtistList: FC<Props> = ({navigation}) => {
+const ArtistList: FC<Props> = ({navigation, isFromAlbum = false, albumArtists}) => {
     const [searchValue, setSearchValue] = useState('');
 
     const songs = useSelector(({songs: {songs}}: RootState) => songs);
-    const artists: Artist[] = Array.from(new Set(songs.map(({artist}) => artist))).map(artistName => ({
-        name: artistName || 'unknown'
-    })).sort((a1, a2) =>
-        a1.name.toLowerCase().localeCompare(a2.name.toLowerCase()));
+    let artists: Artist[];
+    if (isFromAlbum)
+        artists = albumArtists!.split('/').map(artistName => ({
+            name: artistName || 'unknown'
+        })).sort((a1, a2) =>
+            a1.name.toLowerCase().localeCompare(a2.name.toLowerCase()));
+    else
+        artists = Array.from(new Set(songs.map(({artist}) => artist))).map(artistName => ({
+            name: artistName || 'unknown'
+        })).sort((a1, a2) =>
+            a1.name.toLowerCase().localeCompare(a2.name.toLowerCase()));
 
     return (
         <>
+            {!isFromAlbum &&
             <SearchBox value={searchValue} setValue={setSearchValue}/>
-            <FlatList data={artists} renderItem={props => <ArtistItem navigation={navigation} {...props}/>}
+            }
+            <FlatList data={artists}
+                      renderItem={props => <ArtistItem navigation={navigation} isHorizontal={isFromAlbum} {...props}/>}
                       keyExtractor={({name}: Artist) => name} removeClippedSubviews maxToRenderPerBatch={20}
-                      updateCellsBatchingPeriod={200} initialNumToRender={20} windowSize={41} numColumns={2}
-                      columnWrapperStyle={{justifyContent: 'space-around'}} style={{marginBottom: 120}}/>
+                      updateCellsBatchingPeriod={200} initialNumToRender={20} windowSize={41} horizontal={isFromAlbum}
+                      columnWrapperStyle={isFromAlbum ? undefined : {justifyContent: 'space-around'}}
+                      style={isFromAlbum ? {} : {marginBottom: 120}} numColumns={isFromAlbum ? undefined : 2}/>
         </>
     );
 };
