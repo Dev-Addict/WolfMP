@@ -9,11 +9,9 @@ type Props = {
 }
 
 const SongsScreen: FC<Props> = ({navigation}) => {
-    const [searchValue, setSearchValue] = useState('');
 
     return (
         <View>
-            <SearchBox value={searchValue} setValue={setSearchValue}/>
             <SongsList navigation={navigation}/>
         </View>
     );

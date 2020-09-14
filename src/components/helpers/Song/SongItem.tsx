@@ -1,4 +1,4 @@
-import React, {FC, PureComponent} from "react";
+import React, {PureComponent} from "react";
 import {View} from "react-native";
 
 import {Ionicons, MaterialIcons} from '@expo/vector-icons';

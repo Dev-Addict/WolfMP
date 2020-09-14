@@ -50,6 +50,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#33383D'
+    },
+    card: {
+        borderWidth: 2,
+        borderColor: '#D3D4D6',
+        borderRadius: 5,
+        backgroundColor: '#262A2F',
+        elevation: 3,
+        margin: 10
+    },
+    content: {
+        padding: 10
     }
 });
 
