@@ -2,6 +2,7 @@ import React, {FC, useState} from "react";
 import {View} from "react-native";
 import SearchBox from "../components/helpers/SearchBox";
 import AlbumList from "../components/helpers/Song/AlbumList";
+import styles from "../styles";
 
 type Props = {
     navigation: any;
@@ -10,7 +11,7 @@ type Props = {
 const AlbumsScreen: FC<Props> = ({navigation}) => {
 
     return (
-        <View>
+        <View style={styles.screen}>
             <AlbumList navigation={navigation}/>
         </View>
     );

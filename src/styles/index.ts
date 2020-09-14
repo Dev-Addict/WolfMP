@@ -6,6 +6,11 @@ const styles = StyleSheet.create({
         height: '100%',
         backgroundColor: '#33383D'
     },
+    screen: {
+        flex: 1,
+        height: '100%',
+        backgroundColor: '#33383D'
+    },
     text: {
         color: '#D3D4D6',
         fontFamily: 'consolas'

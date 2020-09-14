@@ -3,16 +3,17 @@ import {View, Text} from "react-native";
 
 import SearchBox from "../components/helpers/SearchBox";
 import SongsList from "../components/helpers/Song/SongsList";
+import styles from "../styles";
 
 type Props = {
-    navigation: any
+    navigation: any,
+    route: any
 }
 
-const SongsScreen: FC<Props> = ({navigation}) => {
-
+const SongsScreen: FC<Props> = ({navigation, route}) => {
     return (
-        <View>
-            <SongsList navigation={navigation}/>
+        <View style={styles.screen}>
+            <SongsList navigation={navigation} route={route}/>
         </View>
     );
 };

@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "WolfMP",
-    "slug": "WolfMP",
+    "slug": "wolf-mp",
+    "platforms": ["android", "ios"],
     "version": "0.0.0",
     "orientation": "portrait",
     "icon": "./assets/wolf-icon.png",
@@ -18,9 +19,6 @@
     ],
     "ios": {
       "supportsTablet": true
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
     },
     "androidStatusBar": {
       "backgroundColor": "#33383d",

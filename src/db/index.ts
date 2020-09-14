@@ -7,7 +7,7 @@ export const init = () => {
     return new Promise(((resolve, reject) => {
         db.transaction((tx) => {
             tx.executeSql(
-                'CREATE TABLE IF NOT EXISTS songs (id INTEGER PRIMARY KEY NOT NULL, clientId TEXT NOT NULL UNIQUE, title TEXT NOT NULL, album TEXT, artist TEXT, genre TEXT, isExcluded TEXT, isFav TEXT, lrcUri TEXT, coverUri TEXT, videoUri TEXT, uri TEXT NOT NULL, duration REAL NOT NULL);',
+                'CREATE TABLE IF NOT EXISTS songs (id INTEGER PRIMARY KEY NOT NULL, clientId TEXT NOT NULL, title TEXT NOT NULL, album TEXT, artist TEXT, genre TEXT, isExcluded TEXT, isFav TEXT, lrcUri TEXT, coverUri TEXT, videoUri TEXT, uri TEXT NOT NULL, duration REAL NOT NULL);',
                 [],
                 () => {
                     resolve();

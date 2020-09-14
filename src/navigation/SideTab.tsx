@@ -1,4 +1,5 @@
 import React from "react";
+import {createStackNavigator} from "@react-navigation/stack";
 import {MaterialIcons, Ionicons, MaterialCommunityIcons, FontAwesome5} from '@expo/vector-icons';
 
 import createSideTabBar from "./navigators/createSideTabBar";
@@ -10,6 +11,21 @@ import PlaylistsScreen from "../screens/PlaylistsScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import FavoritesScreen from "../screens/FavoritesScreen";
 
+const AlbumsStack = createStackNavigator();
+
+const Albums = () => {
+    return (
+        <AlbumsStack.Navigator screenOptions={{
+            headerShown: false
+        }}>
+            <AlbumsStack.Screen name="Albums" component={AlbumsScreen}/>
+            <AlbumsStack.Screen name="Songs" component={SongsScreen} initialParams={{
+                isFromAlbumScreen: true
+            }}/>
+        </AlbumsStack.Navigator>
+    );
+};
+
 const SideTabNavigator = createSideTabBar();
 
 const SideTab = () => {
@@ -18,7 +34,7 @@ const SideTab = () => {
             <SideTabNavigator.Screen name="Songs" component={SongsScreen} options={{
                 icon: ({color, size}) => (<MaterialIcons name="library-music" size={size} color={color}/>)
             }}/>
-            <SideTabNavigator.Screen name="Albums" component={AlbumsScreen} options={{
+            <SideTabNavigator.Screen name="Albums" component={Albums} options={{
                 icon: ({color, size}) => (<Ionicons name="ios-albums" size={size} color={color}/>)
             }}/>
             <SideTabNavigator.Screen name="Artists" component={ArtistsScreen} options={{
