@@ -6,6 +6,7 @@ import {RootState} from "../../../store";
 import SearchBox from "../SearchBox";
 import Artist from "../../../models/Artist";
 import ArtistItem from "./ArtistItem";
+import filterArtists from "../../../utils/filters/filterArtists";
 
 type Props = {
     navigation: any;
@@ -28,6 +29,8 @@ const ArtistList: FC<Props> = ({navigation, isFromAlbum = false, albumArtists}) 
             name: artistName || 'unknown'
         })).sort((a1, a2) =>
             a1.name.toLowerCase().localeCompare(a2.name.toLowerCase()));
+
+    artists = filterArtists(artists, searchValue);
 
     return (
         <>

@@ -7,7 +7,7 @@ import Album from "../../../models/Album";
 import AlbumItem from "./AlbumItem";
 import SearchBox from "../SearchBox";
 import createAlbumList from "../../../utils/createAlbumList";
-import filterAlbums from "../../../utils/filterAlbums";
+import filterAlbums from "../../../utils/filters/filterAlbums";
 
 type Props = {
     navigation: any;

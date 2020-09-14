@@ -8,6 +8,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../../store";
 import Artist from "../../../models/Artist";
 import GenreItem from "./GenreItem";
+import filterGenres from "../../../utils/filters/filterGenres";
 
 type Props = {
     navigation: any;
@@ -17,8 +18,8 @@ const GenresList: FC<Props> = ({navigation}) => {
     const [searchValue, setSearchValue] = useState('');
 
     const songs = useSelector(({songs: {songs}}: RootState) => songs);
-    const genres: Genre[] = Array.from(new Set(songs.map(({genre}) => genre)))
-        .map(genreName => ({name: genreName || 'unknown'}));
+    const genres: Genre[] = filterGenres(Array.from(new Set(songs.map(({genre}) => genre)))
+        .map(genreName => ({name: genreName || 'unknown'})), searchValue);
 
     return (
         <>

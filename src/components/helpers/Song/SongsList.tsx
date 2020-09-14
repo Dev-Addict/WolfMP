@@ -7,7 +7,7 @@ import {Song} from "../../../store/songs/types";
 import SongItem from "./SongItem";
 import SearchBox from "../SearchBox";
 import AlbumList from "./AlbumList";
-import filterSongs from "../../../utils/filterSongs";
+import filterSongs from "../../../utils/filters/filterSongs";
 import ArtistList from "./ArtistList";
 
 type Props = {
