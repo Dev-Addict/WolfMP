@@ -28,6 +28,9 @@ const SongsList: FC<Props> = ({navigation, route}) => {
         albumArtists = Array.from(new Set(songs.map(song => song.artist))).join('/');
     }
 
+    if (route?.params?.isFromArtistScreen) {
+        songs = songs.filter(song => song.artist === route.params.artist);
+    }
 
     return (
         <>
@@ -35,8 +38,11 @@ const SongsList: FC<Props> = ({navigation, route}) => {
             {route?.params?.isFromAlbumScreen &&
             <>
                 <ArtistList navigation={navigation} isFromAlbum={true} albumArtists={albumArtists}/>
-                <AlbumList navigation={navigation} leadAlbum={route.params.album}/>
+                <AlbumList navigation={navigation} leadAlbum={route.params.album} isHorizontal={true}/>
             </>
+            }
+            {route?.params?.isFromArtistScreen &&
+            <AlbumList navigation={navigation} isHorizontal={true} artist={route.params.artist}/>
             }
             <FlatList data={songs} renderItem={props => <SongItem navigation={navigation} {...props}/>}
                       keyExtractor={({id}: Song) => id} removeClippedSubviews maxToRenderPerBatch={20}

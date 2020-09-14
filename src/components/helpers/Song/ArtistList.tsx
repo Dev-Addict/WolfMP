@@ -39,7 +39,7 @@ const ArtistList: FC<Props> = ({navigation, isFromAlbum = false, albumArtists}) 
                       keyExtractor={({name}: Artist) => name} removeClippedSubviews maxToRenderPerBatch={20}
                       updateCellsBatchingPeriod={200} initialNumToRender={20} windowSize={41} horizontal={isFromAlbum}
                       columnWrapperStyle={isFromAlbum ? undefined : {justifyContent: 'space-around'}}
-                      style={isFromAlbum ? {} : {marginBottom: 120}} numColumns={isFromAlbum ? undefined : 2}/>
+                      numColumns={isFromAlbum ? undefined : 2}/>
         </>
     );
 };

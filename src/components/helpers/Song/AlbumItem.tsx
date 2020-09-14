@@ -16,8 +16,9 @@ class AlbumItem extends PureComponent<Props> {
 
         return (
             <TouchableOpacity onPress={() => {
-                this.props.navigation.navigate('Songs', {
-                    album: name
+                this.props.navigation.push('Songs', {
+                    album: name,
+                    isFromAlbumScreen: true
                 });
             }}>
                 <View style={[styles.card, styles.content]}>

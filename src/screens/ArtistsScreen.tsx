@@ -2,6 +2,7 @@ import React, {FC} from "react";
 import {View} from "react-native";
 
 import ArtistList from "../components/helpers/Song/ArtistList";
+import styles from "../styles";
 
 type Props = {
     navigation: any;
@@ -9,7 +10,7 @@ type Props = {
 
 const ArtistsScreen: FC<Props> = ({navigation}) => {
     return (
-        <View>
+        <View style={styles.screen}>
             <ArtistList navigation={navigation}/>
         </View>
     );

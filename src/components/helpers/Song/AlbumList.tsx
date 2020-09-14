@@ -12,19 +12,25 @@ import filterAlbums from "../../../utils/filterAlbums";
 type Props = {
     navigation: any;
     leadAlbum?: string;
+    isHorizontal?: boolean;
+    artist?: string;
 }
 
-const AlbumList: FC<Props> = ({navigation, leadAlbum}) => {
+const AlbumList: FC<Props> = ({navigation, leadAlbum, isHorizontal = false, artist}) => {
     const [searchValue, setSearchValue] = useState('');
 
     const songs = useSelector(({songs: {songs}}: RootState) => songs);
     let albums: Album[];
-    if (!leadAlbum)
-        albums = createAlbumList(Array.from(new Set(songs.map(({album}) => album)))
-            .filter(albumName => !albumName?.includes('/')), songs);
-    else
+
+    if (leadAlbum)
         albums = createAlbumList(Array.from(new Set(songs.map(({album}) => album)))
             .filter(albumName => albumName?.startsWith(leadAlbum + '/')), songs);
+    else if (artist)
+        albums = createAlbumList(Array.from(new Set(songs.filter(song => song.artist === artist)
+            .map(({album}) => album))), songs);
+    else
+        albums = createAlbumList(Array.from(new Set(songs.map(({album}) => album)))
+            .filter(albumName => !albumName?.includes('/')), songs);
 
     const unknownIndex = albums.findIndex(({name}) => name === 'unknown');
 
@@ -38,12 +44,13 @@ const AlbumList: FC<Props> = ({navigation, leadAlbum}) => {
 
     return (
         <>
-            {!leadAlbum &&
+            {!leadAlbum && !artist &&
             <SearchBox value={searchValue} setValue={setSearchValue}/>
             }
             <FlatList data={albums} renderItem={props => <AlbumItem navigation={navigation} {...props}/>}
                       keyExtractor={({name}: Album) => name} removeClippedSubviews maxToRenderPerBatch={20}
-                      updateCellsBatchingPeriod={200} initialNumToRender={20} windowSize={41}/>
+                      updateCellsBatchingPeriod={200} initialNumToRender={20} windowSize={41}
+                      horizontal={isHorizontal} style={{marginBottom: 0}}/>
         </>
     );
 };

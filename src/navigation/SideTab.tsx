@@ -19,10 +19,21 @@ const Albums = () => {
             headerShown: false
         }}>
             <AlbumsStack.Screen name="Albums" component={AlbumsScreen}/>
-            <AlbumsStack.Screen name="Songs" component={SongsScreen} initialParams={{
-                isFromAlbumScreen: true
-            }}/>
+            <AlbumsStack.Screen name="Songs" component={SongsScreen}/>
         </AlbumsStack.Navigator>
+    );
+};
+
+const ArtistsStack = createStackNavigator();
+
+const Artists = () => {
+    return (
+        <ArtistsStack.Navigator screenOptions={{
+            headerShown: false
+        }}>
+            <ArtistsStack.Screen name="Artists" component={ArtistsScreen}/>
+            <ArtistsStack.Screen name="Songs" component={SongsScreen}/>
+        </ArtistsStack.Navigator>
     );
 };
 
@@ -37,7 +48,7 @@ const SideTab = () => {
             <SideTabNavigator.Screen name="Albums" component={Albums} options={{
                 icon: ({color, size}) => (<Ionicons name="ios-albums" size={size} color={color}/>)
             }}/>
-            <SideTabNavigator.Screen name="Artists" component={ArtistsScreen} options={{
+            <SideTabNavigator.Screen name="Artists" component={Artists} options={{
                 icon: ({color, size}) => (<MaterialCommunityIcons name="artist" size={size} color={color}/>)
             }}/>
             <SideTabNavigator.Screen name="Genres" component={GenresScreen} options={{
