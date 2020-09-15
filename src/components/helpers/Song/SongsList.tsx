@@ -56,11 +56,11 @@ const SongsList: FC<Props> = ({navigation, route}) => {
             {route?.params?.isFromAlbumScreen &&
             <>
                 <ArtistList navigation={navigation} isFromAlbum={true} albumArtists={albumArtists}/>
-                <AlbumList navigation={navigation} leadAlbum={route.params.album} isHorizontal={true}/>
+                <AlbumList navigation={navigation} leadAlbum={route.params.album} isHorizontal={true} hideSearchBar/>
             </>
             }
             {route?.params?.isFromArtistScreen &&
-            <AlbumList navigation={navigation} isHorizontal={true} artist={route.params.artist}/>
+            <AlbumList navigation={navigation} isHorizontal={true} artist={route.params.artist} hideSearchBar/>
             }
             <FlatList data={songs} renderItem={props => <SongItem navigation={navigation} {...props} onBodyPress={(id: string) => {
                 dispatch(setPlayScope(playScope));

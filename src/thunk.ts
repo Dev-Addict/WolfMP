@@ -24,7 +24,7 @@ export const thunkInitializeApp = (): AppThunk<void> => async (dispatch, getStat
 
     const grantPermissionResult = await MediaLibrary.requestPermissionsAsync();
     if (grantPermissionResult.status !== "granted") {
-        Alert.alert('Insufficient Permissions!', 'You need to grant location permissions to use this app.',
+        Alert.alert('Insufficient Permissions!', 'You need to grant camera roll permissions to use this app.',
             [{text: 'Okay!'}, {
                 text: 'Try again!', onPress: () => {
                     dispatch(thunkInitializeApp());
@@ -32,6 +32,11 @@ export const thunkInitializeApp = (): AppThunk<void> => async (dispatch, getStat
             }]);
         return;
     }
+
+    await Audio.setAudioModeAsync({
+        staysActiveInBackground: true,
+        playThroughEarpieceAndroid: false
+    });
 
     const audios = (await MediaLibrary.getAssetsAsync({
         mediaType: "audio",

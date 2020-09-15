@@ -14,9 +14,10 @@ type Props = {
     leadAlbum?: string;
     isHorizontal?: boolean;
     artist?: string;
+    hideSearchBar?: boolean;
 }
 
-const AlbumList: FC<Props> = ({navigation, leadAlbum, isHorizontal = false, artist}) => {
+const AlbumList: FC<Props> = ({navigation, leadAlbum, isHorizontal = false, artist, hideSearchBar = false}) => {
     const [searchValue, setSearchValue] = useState('');
 
     const songs = useSelector(({songs: {songs}}: RootState) => songs);
@@ -44,7 +45,7 @@ const AlbumList: FC<Props> = ({navigation, leadAlbum, isHorizontal = false, arti
 
     return (
         <>
-            {!leadAlbum && !artist &&
+            {!leadAlbum && !artist && !hideSearchBar &&
             <SearchBox value={searchValue} setValue={setSearchValue}/>
             }
             <FlatList data={albums} renderItem={props => <AlbumItem navigation={navigation} {...props}/>}
