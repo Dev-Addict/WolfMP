@@ -10,6 +10,8 @@ import MusicInfo from "./utils/MusicInfo";
 import {getSongs, insertSong} from './db';
 import {SQLResultSet} from "expo-sqlite";
 import {Song} from "./store/songs/types";
+import {Audio} from "expo-av";
+import {setBuffering, setCurrentId, setPlaybackInstance, setPlaying} from "./store/audio/actions";
 import SettingsST from "./models/SettingsST";
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType,
@@ -17,7 +19,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<ReturnType,
     unknown,
     Action<string>>
 
-export const thunkInitializeApp = (): AppThunk<void> => async dispatch => {
+export const thunkInitializeApp = (): AppThunk<void> => async (dispatch, getState) => {
     dispatch(setLoadingState(true));
 
     const grantPermissionResult = await MediaLibrary.requestPermissionsAsync();
@@ -79,5 +81,52 @@ export const thunkInitializeApp = (): AppThunk<void> => async dispatch => {
 
     dispatch(setSongs(songs));
 
+    dispatch(thunkLoadSong(songs[0].id));
+};
+
+export const thunkLoadSong = (id: string): AppThunk<void> => async (dispatch, getState) => {
+    dispatch(setLoadingState(true));
+
+    dispatch(setCurrentId(id));
+
+    const {audio: {isPlaying, volume}, songs: {songs}}: RootState = getState();
+
+    const playbackInstance = new Audio.Sound();
+
+    playbackInstance.setOnPlaybackStatusUpdate(status => dispatch(setBuffering(status.isLoaded)));
+    await playbackInstance.loadAsync({
+        uri: songs.find(song => song.id === id)!.uri
+    }, {
+        shouldPlay: isPlaying,
+        volume
+    });
+
+    dispatch(setPlaybackInstance(playbackInstance));
+
     dispatch(setLoadingState(false));
+};
+
+export const thunkPlayPause = ():AppThunk<void> => async (dispatch, getState) => {
+    const {audio: {isPlaying, playbackInstance}}: RootState = getState();
+    isPlaying ? await playbackInstance?.pauseAsync() : await playbackInstance?.playAsync();
+
+    dispatch(setPlaying(!isPlaying));
+};
+
+export const thunkPrevTrack = ():AppThunk<void> => async (dispatch, getState) => {
+    const {audio: {currentId, playbackInstance}} = getState();
+    const prevSong = SettingsST.getInstance().getPrev(currentId);
+
+    playbackInstance?.unloadAsync();
+
+    dispatch(thunkLoadSong(prevSong.id));
+};
+
+export const thunkNextTrack = ():AppThunk<void> => async (dispatch, getState) => {
+    const {audio: {currentId, playbackInstance}} = getState();
+    const nextSong = SettingsST.getInstance().getNext(currentId);
+
+    playbackInstance?.unloadAsync();
+
+    dispatch(thunkLoadSong(nextSong.id));
 };

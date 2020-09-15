@@ -1,12 +1,21 @@
 import {Audio} from "expo-av";
-import {AudioActionTypes, SET_BUFFERING, SET_CURRENT_ID, SET_PLAYBACK_INSTANCE, SET_PLAYING, SET_VOLUME} from "./types";
+import {
+    AudioActionTypes,
+    SET_BUFFERING,
+    SET_CURRENT_ID,
+    SET_PLAY_MODE,
+    SET_PLAYBACK_INSTANCE,
+    SET_PLAYING,
+    SET_VOLUME
+} from "./types";
+import PlayMode from "../../models/PlayMode";
 
 export const setPlaying = (isPlaying: boolean): AudioActionTypes => ({
     type: SET_PLAYING,
     payload: isPlaying
 });
 
-export const setPlaybackInstance = (playbackInstance: typeof Audio.Sound): AudioActionTypes => ({
+export const setPlaybackInstance = (playbackInstance: Audio.Sound): AudioActionTypes => ({
     type: SET_PLAYBACK_INSTANCE,
     payload: playbackInstance
 });
@@ -24,4 +33,9 @@ export const setVolume = (volume: number): AudioActionTypes => ({
 export const setBuffering = (isBuffering: boolean): AudioActionTypes => ({
     type: SET_BUFFERING,
     payload: isBuffering
+});
+
+export const setPlayMode = (playMode: PlayMode): AudioActionTypes => ({
+    type: SET_PLAY_MODE,
+    payload: playMode
 });
