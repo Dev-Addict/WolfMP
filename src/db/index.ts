@@ -99,8 +99,10 @@ export const updateSong = (
         db.transaction(tx => {
             tx.executeSql(
                 'UPDATE songs SET clientId = ?, title = ?, album = ?, artist = ?, genre = ?, isExcluded = ?, isFav = ?, lrcUri = ?, coverUri = ?, videoUri = ?, uri = ?, duration = ? WHERE id = ?',
-                [clientId, title, album, artist, genre, isExcluded, isFav, lrcUri, coverUri, videoUri, uri, duration, id],
+                [clientId, title, album, artist, genre, isExcluded ? 'yes': 'no', isFav ? 'yes': 'no', lrcUri, coverUri, videoUri, uri, duration, id],
                 (transaction, resultSet) => {
+                    console.log(resultSet);
+                    console.log(id);
                     resolve(resultSet);
                 },
                 (sqlTransaction: SQLTransaction, sqlError: SQLError) => {

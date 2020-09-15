@@ -22,6 +22,7 @@ export default class SettingsST {
 
     public setSongs = (songs: Song[]) => {
         this.playOrder = songs;
+        this.setPlayOrder(this.playMode);
     };
 
     public setPlayOrder = (playMode: PlayMode) => {

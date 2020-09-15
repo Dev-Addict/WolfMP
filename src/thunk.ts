@@ -3,11 +3,11 @@ import {Alert} from 'react-native';
 import {Action} from "redux";
 import {ThunkAction} from "redux-thunk";
 
-import {setSongs} from "./store/songs/actions";
+import {setSongs, updateSong as updateLocalSong} from "./store/songs/actions";
 import {setLoadingState} from './store/isLoading/actions';
 import {RootState} from "./store";
 import MusicInfo from "./utils/MusicInfo";
-import {getSongs, insertSong} from './db';
+import {getSongs, insertSong, updateSong} from './db';
 import {SQLResultSet} from "expo-sqlite";
 import {Song} from "./store/songs/types";
 import {Audio, AVPlaybackStatus} from "expo-av";
@@ -54,7 +54,8 @@ export const thunkInitializeApp = (): AppThunk<void> => async (dispatch, getStat
                 ...dbSong,
                 isExcluded: dbSong.isExcluded === 'yes',
                 isFav: dbSong.isFav === 'yes',
-                id: audio.id
+                id: audio.id,
+                dbId: dbSong.id.toString()
             });
         } else {
             const musicInfo = await MusicInfo.getMusicInfoAsync(audio.uri);
@@ -111,7 +112,7 @@ export const thunkLoadSong = (id: string, shouldPlay: boolean = false): AppThunk
 
             if (playbackStatus.didJustFinish && !playbackStatus.isLooping)
                 dispatch(thunkNextTrack());
-            if (playbackStatus.shouldPlay && !playbackStatus.isPlaying)
+            if (playbackStatus.shouldPlay && !playbackStatus.isPlaying && playbackStatus.isLoaded)
                 playbackInstance.playAsync();
         }
     });
@@ -146,4 +147,23 @@ export const thunkNextTrack = ():AppThunk<void> => async (dispatch, getState) =>
     const nextSong = SettingsST.getInstance().getNext(currentId);
 
     dispatch(thunkLoadSong(nextSong.id, true));
+};
+
+export const thunkUpdateSong = (song: Song):AppThunk<void> => async (dispatch) => {
+    await updateSong(song.dbId, {
+        clientId: song.id,
+        title: song.title,
+        album: song.album,
+        artist: song.artist,
+        genre: song.genre,
+        isExcluded: song.isExcluded,
+        isFav: song.isFav,
+        lrcUri: song.lrcUri,
+        coverUri: song.coverUri,
+        videoUri: song.videoUri,
+        uri: song.uri,
+        duration: song.duration
+    });
+
+    dispatch(updateLocalSong(song));
 };

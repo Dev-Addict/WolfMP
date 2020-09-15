@@ -19,10 +19,16 @@ export interface SongsState {
 }
 
 export const SET_SONGS = 'SET_SONGS';
+export const UPDATE_SONG = 'UPDATE_SONG';
 
-interface SetSongs {
+interface setSongs {
     type: typeof SET_SONGS
     payload: Song[]
 }
 
-export type SongsActionTypes = SetSongs;
+interface updateSong {
+    type: typeof UPDATE_SONG;
+    payload: Song
+}
+
+export type SongsActionTypes = setSongs | updateSong;
