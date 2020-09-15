@@ -90,7 +90,9 @@ export const thunkLoadSong = (id: string, shouldPlay: boolean = false): AppThunk
 
     dispatch(setCurrentId(id));
 
-    const {audio: {isPlaying, volume}, songs: {songs}}: RootState = getState();
+    const {audio: {isPlaying, volume, playbackInstance: prevPlaybackInstance}, songs: {songs}}: RootState = getState();
+
+    await prevPlaybackInstance?.unloadAsync();
 
     const playbackInstance = new Audio.Sound();
 
@@ -127,19 +129,15 @@ export const thunkPlayPause = ():AppThunk<void> => async (dispatch, getState) =>
 };
 
 export const thunkPrevTrack = ():AppThunk<void> => async (dispatch, getState) => {
-    const {audio: {currentId, playbackInstance}} = getState();
+    const {audio: {currentId}} = getState();
     const prevSong = SettingsST.getInstance().getPrev(currentId);
-
-    playbackInstance?.unloadAsync();
 
     dispatch(thunkLoadSong(prevSong.id, true));
 };
 
 export const thunkNextTrack = ():AppThunk<void> => async (dispatch, getState) => {
-    const {audio: {currentId, playbackInstance}} = getState();
+    const {audio: {currentId}} = getState();
     const nextSong = SettingsST.getInstance().getNext(currentId);
-
-    playbackInstance?.unloadAsync();
 
     dispatch(thunkLoadSong(nextSong.id, true));
 };

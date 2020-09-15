@@ -4,11 +4,14 @@ import {
     SET_BUFFERING,
     SET_CURRENT_ID,
     SET_PLAY_MODE,
+    SET_PLAY_SCOPE,
     SET_PLAYBACK_INSTANCE,
     SET_PLAYING,
+    SET_SCOPE_VALUE,
     SET_VOLUME
 } from "./types";
 import PlayMode from "../../models/PlayMode";
+import PlayScope from "../../models/PlayScope";
 import SettingsST from "../../models/SettingsST";
 
 const initialState: AudioState = {
@@ -17,7 +20,9 @@ const initialState: AudioState = {
     currentId: '',
     volume: 1.0,
     isBuffering: true,
-    playMode: PlayMode.REPEAT
+    playMode: PlayMode.REPEAT,
+    playScope: PlayScope.NONE,
+    scopeValue: undefined
 };
 
 export const audioReducer = (
@@ -38,6 +43,12 @@ export const audioReducer = (
         case SET_PLAY_MODE:
             SettingsST.getInstance().setPlayOrder(action.payload);
             return {...state, playMode: action.payload};
+        case SET_PLAY_SCOPE:
+            SettingsST.getInstance().setPlayScope(action.payload);
+            return {...state, playScope: action.payload};
+        case SET_SCOPE_VALUE:
+            SettingsST.getInstance().setScopeValue(action.payload);
+            return {...state, scopeValue: action.payload};
         default:
             return state;
     }

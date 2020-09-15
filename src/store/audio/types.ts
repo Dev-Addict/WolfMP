@@ -1,5 +1,7 @@
 import {Audio} from "expo-av";
+
 import PlayMode from "../../models/PlayMode";
+import PlayScope from "../../models/PlayScope";
 
 export interface AudioState {
     isPlaying: boolean;
@@ -7,7 +9,9 @@ export interface AudioState {
     currentId: string;
     volume: number;
     isBuffering: boolean;
-    playMode: PlayMode
+    playMode: PlayMode;
+    playScope: PlayScope;
+    scopeValue: string | undefined;
 }
 
 export const SET_PLAYING = 'SET_PLAYING';
@@ -16,6 +20,8 @@ export const SET_CURRENT_ID = 'SET_CURRENT_ID';
 export const SET_VOLUME = 'SET_VOLUME';
 export const SET_BUFFERING = 'SET_BUFFERING';
 export const SET_PLAY_MODE = 'SET_PLAY_MODE';
+export const SET_PLAY_SCOPE = 'SET_PLAY_SCOPE';
+export const SET_SCOPE_VALUE = 'SET_SCOPE_VALUE';
 
 interface setPlaying {
     type: typeof SET_PLAYING;
@@ -47,4 +53,22 @@ interface setPlayMode {
     payload: PlayMode;
 }
 
-export type AudioActionTypes = setPlaying | setPlaybackInstance | setCurrentId | setVolume | setBuffering | setPlayMode;
+interface setPlayScope {
+    type: typeof SET_PLAY_SCOPE;
+    payload: PlayScope;
+}
+
+interface setScopeValue {
+    type: typeof SET_SCOPE_VALUE;
+    payload: string | undefined;
+}
+
+export type AudioActionTypes =
+    setPlaying
+    | setPlaybackInstance
+    | setCurrentId
+    | setVolume
+    | setBuffering
+    | setPlayMode
+    | setPlayScope
+    | setScopeValue;

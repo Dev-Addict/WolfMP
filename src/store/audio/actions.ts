@@ -4,11 +4,14 @@ import {
     SET_BUFFERING,
     SET_CURRENT_ID,
     SET_PLAY_MODE,
+    SET_PLAY_SCOPE,
     SET_PLAYBACK_INSTANCE,
     SET_PLAYING,
+    SET_SCOPE_VALUE,
     SET_VOLUME
 } from "./types";
 import PlayMode from "../../models/PlayMode";
+import PlayScope from "../../models/PlayScope";
 
 export const setPlaying = (isPlaying: boolean): AudioActionTypes => ({
     type: SET_PLAYING,
@@ -38,4 +41,14 @@ export const setBuffering = (isBuffering: boolean): AudioActionTypes => ({
 export const setPlayMode = (playMode: PlayMode): AudioActionTypes => ({
     type: SET_PLAY_MODE,
     payload: playMode
+});
+
+export const setPlayScope = (playScope: PlayScope): AudioActionTypes => ({
+    type: SET_PLAY_SCOPE,
+    payload: playScope
+});
+
+export const setScopeValue = (scopeValue: string | undefined): AudioActionTypes => ({
+    type: SET_SCOPE_VALUE,
+    payload: scopeValue
 });
