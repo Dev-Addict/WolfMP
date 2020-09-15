@@ -1,9 +1,9 @@
 import React, {FC, useState} from "react";
 import {View, Text} from "react-native";
 
-import SearchBox from "../components/helpers/SearchBox";
-import SongsList from "../components/helpers/Song/SongsList";
-import styles from "../styles";
+import SearchBox from "../../components/helpers/SearchBox";
+import SongsList from "../../components/helpers/Song/SongsList";
+import styles from "../../styles";
 
 type Props = {
     navigation: any,

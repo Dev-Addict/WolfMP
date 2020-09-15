@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         padding: 10
     },
     playControl: {
-        backgroundColor: '#00000022',
+        backgroundColor: '#2D3136',
         padding: 10,
         flexDirection: 'row',
         alignItems: 'center',

@@ -3,13 +3,13 @@ import {createStackNavigator} from "@react-navigation/stack";
 import {MaterialIcons, Ionicons, MaterialCommunityIcons, FontAwesome5} from '@expo/vector-icons';
 
 import createSideTabBar from "./navigators/createSideTabBar";
-import SongsScreen from "../screens/SongsScreen";
-import AlbumsScreen from "../screens/AlbumsScreen";
-import ArtistsScreen from "../screens/ArtistsScreen";
-import GenresScreen from "../screens/GenresScreen";
-import PlaylistsScreen from "../screens/PlaylistsScreen";
-import SettingsScreen from "../screens/SettingsScreen";
-import FavoritesScreen from "../screens/FavoritesScreen";
+import SongsScreen from "../screens/Main/SongsScreen";
+import AlbumsScreen from "../screens/Main/AlbumsScreen";
+import ArtistsScreen from "../screens/Main/ArtistsScreen";
+import GenresScreen from "../screens/Main/GenresScreen";
+import PlaylistsScreen from "../screens/Main/PlaylistsScreen";
+import SettingsScreen from "../screens/Main/SettingsScreen";
+import FavoritesScreen from "../screens/Main/FavoritesScreen";
 
 const AlbumsStack = createStackNavigator();
 
@@ -52,7 +52,7 @@ const Genres = () => {
 
 const SideTabNavigator = createSideTabBar();
 
-const SideTab = () => {
+const SideTabNavigation = () => {
     return (
         <SideTabNavigator.Navigator initialRouteName="Songs">
             <SideTabNavigator.Screen name="Songs" component={SongsScreen} options={{
@@ -80,4 +80,4 @@ const SideTab = () => {
     );
 };
 
-export default SideTab;
+export default SideTabNavigation;

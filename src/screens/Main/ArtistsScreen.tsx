@@ -1,8 +1,8 @@
 import React, {FC} from "react";
 import {View} from "react-native";
 
-import ArtistList from "../components/helpers/Song/ArtistList";
-import styles from "../styles";
+import ArtistList from "../../components/helpers/Song/ArtistList";
+import styles from "../../styles";
 
 type Props = {
     navigation: any;

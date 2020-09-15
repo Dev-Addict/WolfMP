@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import {View} from "react-native";
-import GenresList from "../components/helpers/Song/GenreList";
-import styles from "../styles";
+import GenresList from "../../components/helpers/Song/GenreList";
+import styles from "../../styles";
 
 type Props = {
     navigation: any;

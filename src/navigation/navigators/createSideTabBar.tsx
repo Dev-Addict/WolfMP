@@ -95,7 +95,7 @@ const SideTabNavigator = (
                 <View style={{height: Dimensions.get('window').height - 60}}>
                     {descriptors[state.routes[state.index].key].render()}
                 </View>
-                <SongController/>
+                <SongController navigation={navigation}/>
             </View>
         </View>
     );

@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import {View} from "react-native";
 
-import SearchBox from "../components/helpers/SearchBox";
+import SearchBox from "../../components/helpers/SearchBox";
 
-const FavoritesScreen = () => {
+const PlaylistsScreen = () => {
     const [searchValue, setSearchValue] = useState('');
 
     return (
@@ -13,4 +13,4 @@ const FavoritesScreen = () => {
     );
 };
 
-export default FavoritesScreen;
+export default PlaylistsScreen;

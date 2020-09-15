@@ -109,9 +109,10 @@ export const thunkLoadSong = (id: string, shouldPlay: boolean = false): AppThunk
         } else {
             dispatch(setBuffering(playbackStatus.isBuffering));
 
-            if (playbackStatus.didJustFinish && !playbackStatus.isLooping) {
+            if (playbackStatus.didJustFinish && !playbackStatus.isLooping)
                 dispatch(thunkNextTrack());
-            }
+            if (playbackStatus.shouldPlay && !playbackStatus.isPlaying)
+                playbackInstance.playAsync();
         }
     });
     await playbackInstance.loadAsync({
