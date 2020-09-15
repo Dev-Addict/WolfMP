@@ -10,7 +10,7 @@ import MusicInfo from "./utils/MusicInfo";
 import {getSongs, insertSong} from './db';
 import {SQLResultSet} from "expo-sqlite";
 import {Song} from "./store/songs/types";
-import {Audio} from "expo-av";
+import {Audio, AVPlaybackStatus} from "expo-av";
 import {setBuffering, setCurrentId, setPlaybackInstance, setPlaying} from "./store/audio/actions";
 import SettingsST from "./models/SettingsST";
 
@@ -82,10 +82,11 @@ export const thunkInitializeApp = (): AppThunk<void> => async (dispatch, getStat
     dispatch(setSongs(songs));
 
     dispatch(thunkLoadSong(songs[0].id));
+
+    dispatch(setLoadingState(false));
 };
 
-export const thunkLoadSong = (id: string): AppThunk<void> => async (dispatch, getState) => {
-    dispatch(setLoadingState(true));
+export const thunkLoadSong = (id: string, shouldPlay: boolean = false): AppThunk<void> => async (dispatch, getState) => {
 
     dispatch(setCurrentId(id));
 
@@ -93,17 +94,29 @@ export const thunkLoadSong = (id: string): AppThunk<void> => async (dispatch, ge
 
     const playbackInstance = new Audio.Sound();
 
-    playbackInstance.setOnPlaybackStatusUpdate(status => dispatch(setBuffering(status.isLoaded)));
+    playbackInstance.setOnPlaybackStatusUpdate((playbackStatus: AVPlaybackStatus) => {
+        if (!playbackStatus.isLoaded) {
+            if (playbackStatus.error) {
+                console.log(`Encountered a fatal error during playback: ${playbackStatus.error}`);
+            }
+        } else {
+            dispatch(setBuffering(playbackStatus.isBuffering));
+
+            if (playbackStatus.didJustFinish && !playbackStatus.isLooping) {
+                dispatch(thunkNextTrack());
+            }
+        }
+    });
     await playbackInstance.loadAsync({
         uri: songs.find(song => song.id === id)!.uri
     }, {
-        shouldPlay: isPlaying,
+        shouldPlay: isPlaying || shouldPlay,
         volume
     });
 
-    dispatch(setPlaybackInstance(playbackInstance));
+    dispatch(setPlaying(isPlaying || shouldPlay));
 
-    dispatch(setLoadingState(false));
+    dispatch(setPlaybackInstance(playbackInstance));
 };
 
 export const thunkPlayPause = ():AppThunk<void> => async (dispatch, getState) => {
@@ -119,7 +132,7 @@ export const thunkPrevTrack = ():AppThunk<void> => async (dispatch, getState) =>
 
     playbackInstance?.unloadAsync();
 
-    dispatch(thunkLoadSong(prevSong.id));
+    dispatch(thunkLoadSong(prevSong.id, true));
 };
 
 export const thunkNextTrack = ():AppThunk<void> => async (dispatch, getState) => {
@@ -128,5 +141,5 @@ export const thunkNextTrack = ():AppThunk<void> => async (dispatch, getState) =>
 
     playbackInstance?.unloadAsync();
 
-    dispatch(thunkLoadSong(nextSong.id));
+    dispatch(thunkLoadSong(nextSong.id, true));
 };

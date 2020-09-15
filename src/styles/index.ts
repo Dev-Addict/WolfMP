@@ -66,6 +66,13 @@ const styles = StyleSheet.create({
     },
     content: {
         padding: 10
+    },
+    playControl: {
+        backgroundColor: '#00000022',
+        padding: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%'
     }
 });
 

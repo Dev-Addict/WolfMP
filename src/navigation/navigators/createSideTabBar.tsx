@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {Dimensions, TouchableOpacity, View} from 'react-native';
 import {
     useNavigationBuilder,
     DefaultNavigatorOptions,
@@ -12,6 +12,7 @@ import {
 
 import Text from '../../components/Text';
 import styles from "../../styles";
+import SongController from "../../components/helpers/navigation/SongController";
 
 type IconProps = {
     color: string;
@@ -91,7 +92,10 @@ const SideTabNavigator = (
                 })}
             </View>
             <View style={{flex: 16}}>
-                {descriptors[state.routes[state.index].key].render()}
+                <View style={{height: Dimensions.get('window').height - 60}}>
+                    {descriptors[state.routes[state.index].key].render()}
+                </View>
+                <SongController/>
             </View>
         </View>
     );
