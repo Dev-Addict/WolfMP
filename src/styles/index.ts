@@ -73,6 +73,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%'
+    },
+    songAction: {
+        flex: 1,
+        padding: 5,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    songActionTouchable: {
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });
 

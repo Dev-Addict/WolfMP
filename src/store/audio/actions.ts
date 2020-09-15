@@ -3,6 +3,7 @@ import {
     AudioActionTypes,
     SET_BUFFERING,
     SET_CURRENT_ID,
+    SET_CURRENT_POSITION,
     SET_PLAY_MODE,
     SET_PLAY_SCOPE,
     SET_PLAYBACK_INSTANCE,
@@ -51,4 +52,9 @@ export const setPlayScope = (playScope: PlayScope): AudioActionTypes => ({
 export const setScopeValue = (scopeValue: string | undefined): AudioActionTypes => ({
     type: SET_SCOPE_VALUE,
     payload: scopeValue
+});
+
+export const setCurrentPosition = (currentPosition: number): AudioActionTypes => ({
+    type: SET_CURRENT_POSITION,
+    payload: currentPosition
 });

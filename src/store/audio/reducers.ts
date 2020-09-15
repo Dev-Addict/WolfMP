@@ -3,6 +3,7 @@ import {
     AudioState,
     SET_BUFFERING,
     SET_CURRENT_ID,
+    SET_CURRENT_POSITION,
     SET_PLAY_MODE,
     SET_PLAY_SCOPE,
     SET_PLAYBACK_INSTANCE,
@@ -22,7 +23,8 @@ const initialState: AudioState = {
     isBuffering: true,
     playMode: PlayMode.REPEAT,
     playScope: PlayScope.NONE,
-    scopeValue: undefined
+    scopeValue: undefined,
+    currentPosition: 0
 };
 
 export const audioReducer = (
@@ -30,6 +32,8 @@ export const audioReducer = (
     action: AudioActionTypes
 ): AudioState => {
     switch (action.type) {
+        case SET_CURRENT_POSITION:
+            return {...state, currentPosition: action.payload};
         case SET_PLAYING:
             return {...state, isPlaying: action.payload};
         case SET_PLAYBACK_INSTANCE:

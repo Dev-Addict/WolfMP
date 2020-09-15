@@ -12,6 +12,7 @@ export interface AudioState {
     playMode: PlayMode;
     playScope: PlayScope;
     scopeValue: string | undefined;
+    currentPosition: number;
 }
 
 export const SET_PLAYING = 'SET_PLAYING';
@@ -22,6 +23,7 @@ export const SET_BUFFERING = 'SET_BUFFERING';
 export const SET_PLAY_MODE = 'SET_PLAY_MODE';
 export const SET_PLAY_SCOPE = 'SET_PLAY_SCOPE';
 export const SET_SCOPE_VALUE = 'SET_SCOPE_VALUE';
+export const SET_CURRENT_POSITION = 'SET_CURRENT_POSITION';
 
 interface setPlaying {
     type: typeof SET_PLAYING;
@@ -63,6 +65,11 @@ interface setScopeValue {
     payload: string | undefined;
 }
 
+interface setCurrentPosition {
+    type: typeof SET_CURRENT_POSITION;
+    payload: number;
+}
+
 export type AudioActionTypes =
     setPlaying
     | setPlaybackInstance
@@ -71,4 +78,5 @@ export type AudioActionTypes =
     | setBuffering
     | setPlayMode
     | setPlayScope
-    | setScopeValue;
+    | setScopeValue
+    | setCurrentPosition;

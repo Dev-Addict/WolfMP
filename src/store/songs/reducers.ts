@@ -20,7 +20,7 @@ export const songsReducer = (
             state.songs[songIndex] = action.payload;
             SettingsST.getInstance().setSongs(state.songs);
             return {
-                songs: [...state.songs, action.payload]
+                songs: [...state.songs]
             };
         default:
             return state;

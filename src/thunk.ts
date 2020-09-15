@@ -11,7 +11,7 @@ import {getSongs, insertSong, updateSong} from './db';
 import {SQLResultSet} from "expo-sqlite";
 import {Song} from "./store/songs/types";
 import {Audio, AVPlaybackStatus} from "expo-av";
-import {setBuffering, setCurrentId, setPlaybackInstance, setPlaying} from "./store/audio/actions";
+import {setBuffering, setCurrentId, setCurrentPosition, setPlaybackInstance, setPlaying} from "./store/audio/actions";
 import SettingsST from "./models/SettingsST";
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType,
@@ -109,10 +109,11 @@ export const thunkLoadSong = (id: string, shouldPlay: boolean = false): AppThunk
             }
         } else {
             dispatch(setBuffering(playbackStatus.isBuffering));
+            dispatch(setCurrentPosition(playbackStatus.positionMillis));
 
             if (playbackStatus.didJustFinish && !playbackStatus.isLooping)
                 dispatch(thunkNextTrack());
-            if (playbackStatus.shouldPlay && !playbackStatus.isPlaying && playbackStatus.isLoaded)
+            if (playbackStatus.shouldPlay && !playbackStatus.isPlaying && playbackStatus.isLoaded && !playbackStatus.isBuffering && playbackStatus.didJustFinish)
                 playbackInstance.playAsync();
         }
     });
@@ -128,28 +129,28 @@ export const thunkLoadSong = (id: string, shouldPlay: boolean = false): AppThunk
     dispatch(setPlaybackInstance(playbackInstance));
 };
 
-export const thunkPlayPause = ():AppThunk<void> => async (dispatch, getState) => {
+export const thunkPlayPause = (): AppThunk<void> => async (dispatch, getState) => {
     const {audio: {isPlaying, playbackInstance}}: RootState = getState();
     isPlaying ? await playbackInstance?.pauseAsync() : await playbackInstance?.playAsync();
 
     dispatch(setPlaying(!isPlaying));
 };
 
-export const thunkPrevTrack = ():AppThunk<void> => async (dispatch, getState) => {
+export const thunkPrevTrack = (): AppThunk<void> => async (dispatch, getState) => {
     const {audio: {currentId}} = getState();
     const prevSong = SettingsST.getInstance().getPrev(currentId);
 
     dispatch(thunkLoadSong(prevSong.id, true));
 };
 
-export const thunkNextTrack = ():AppThunk<void> => async (dispatch, getState) => {
+export const thunkNextTrack = (): AppThunk<void> => async (dispatch, getState) => {
     const {audio: {currentId}} = getState();
     const nextSong = SettingsST.getInstance().getNext(currentId);
 
     dispatch(thunkLoadSong(nextSong.id, true));
 };
 
-export const thunkUpdateSong = (song: Song):AppThunk<void> => async (dispatch) => {
+export const thunkUpdateSong = (song: Song): AppThunk<void> => async (dispatch) => {
     await updateSong(song.dbId, {
         clientId: song.id,
         title: song.title,
