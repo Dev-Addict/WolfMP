@@ -8,6 +8,7 @@ import SongActions from "../../components/helpers/detail/SongActions";
 import SongSlider from "../../components/helpers/detail/SongSlider";
 import SongController from "../../components/helpers/detail/SongController";
 import SongDetail from "../../components/helpers/detail/SongDetail";
+import LyricsShower from "../../components/helpers/detail/LyricsShower";
 
 type Props = {
     route: any;
@@ -31,6 +32,7 @@ const SongScreen: FC<Props> = ({navigation}) => {
                 minHeight: Dimensions.get('window').height
             }]}>
                 <SongDetail song={song}/>
+                <LyricsShower lyrics={song.lyrics} position={position}/>
                 <SongActions song={song} navigation={navigation}/>
                 <SongSlider position={position} song={song} playbackInstance={playbackInstance}/>
                 <SongController isPlaying={isPlaying} playMode={playMode}/>
