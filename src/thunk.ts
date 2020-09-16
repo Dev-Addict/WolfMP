@@ -196,11 +196,11 @@ export const thunkSaveLyrics = (song: Song, lyrics: Lyrics): AppThunk<void> => a
 
     for (const {time, text} of lyrics)
         content += `\n[${
-            BeautifyNumber(Math.round(time! / 3600))
+            BeautifyNumber(Math.round(time! / 60))
         }:${
-            BeautifyNumber(Math.round(time! % 3600 / 60))
-        }:${
-            BeautifyNumber(Math.round(time! % 60))
+            BeautifyNumber(Math.round(time! % 60 / 60))
+        }.${
+            BeautifyNumber(+(time! % 1).toString().substring(2,4))
         }]${text}`;
 
     const folderUri = FileSystem.documentDirectory + 'lrcs';
