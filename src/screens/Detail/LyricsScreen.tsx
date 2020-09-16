@@ -1,14 +1,19 @@
 import React, {useState, FC} from "react";
-import {FlatList, KeyboardAvoidingView, View} from 'react-native';
-import Lyrics from "../../models/Lyrics";
-import SongSlider from "../../components/helpers/detail/SongSlider";
+import * as DocumentPicker from 'expo-document-picker';
+import * as FileSystem from 'expo-file-system';
+import {Alert, FlatList, KeyboardAvoidingView, View} from 'react-native';
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../store";
+
 import LyricsActions from "../../components/helpers/detail/LyricsActions";
 import LyricsLineItem from "../../components/helpers/detail/LyricLineItem";
-import styles from "../../styles";
 import SongController from "../../components/helpers/detail/SongController";
 import {thunkSaveLyrics} from "../../thunk";
+import SongSlider from "../../components/helpers/detail/SongSlider";
+import lrcParser from "../../utils/lrcParser";
+import {setLoadingState} from "../../store/isLoading/actions";
+import {RootState} from "../../store";
+import Lyrics from "../../models/Lyrics";
+import styles from "../../styles";
 
 type Props = {
     navigation: any;
@@ -25,7 +30,17 @@ const LyricsScreen: FC<Props> = ({navigation}) => {
 
     const [lyrics, setLyrics] = useState(song.lyrics || initialState);
 
-    const onLrc = () => {
+    const onLrc = async () => {
+        dispatch(setLoadingState(true));
+
+        const result = await DocumentPicker.getDocumentAsync();
+
+        if (result.type !== "cancel" && /.*\.lrc/.test(result.name))
+            setLyrics(lrcParser(await FileSystem.readAsStringAsync(result.uri)) || lyrics);
+        else if (result.type === "success")
+            Alert.alert('Wrong Format.', 'Only lrc files are allowed to choose to fill the lyrics', [{text: 'OK!'}]);
+
+        dispatch(setLoadingState(false));
     };
 
     const onAddLine = () => {
@@ -50,7 +65,8 @@ const LyricsScreen: FC<Props> = ({navigation}) => {
             <KeyboardAvoidingView>
                 <SongSlider position={position} song={song} playbackInstance={playbackInstance}/>
                 <SongController isPlaying={isPlaying} playMode={playMode}/>
-                <LyricsActions onLrc={onLrc} onAddLine={onAddLine} onCancel={onCancel} onSave={onSave}/>
+                <LyricsActions onLrc={onLrc} onAddLine={onAddLine} onCancel={onCancel}
+                               onSave={onSave}/>
                 <FlatList data={lyrics} style={{marginTop: 50}}
                           renderItem={(props) => <LyricsLineItem setLyrics={setLyrics} lyrics={lyrics} {...props}/>}/>
             </KeyboardAvoidingView>

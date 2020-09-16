@@ -18,7 +18,7 @@ const LyricsActions: FC<Props> = ({onLrc, onAddLine, onSave, onCancel}) => {
             <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 60, marginTop: 50}}>
                 <TouchableOpacity style={styles.action} onPress={onLrc}>
                     <MaterialIcons name="insert-drive-file" size={24} color="#D3D4D6"/>
-                    <Text size={6} numberOfLines={1}>Use Lrc file</Text>
+                    <Text size={6} numberOfLines={1}>Use Lrc</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.action} onPress={onAddLine}>
                     <MaterialIcons name="add-circle" size={24} color="#D3D4D6"/>
