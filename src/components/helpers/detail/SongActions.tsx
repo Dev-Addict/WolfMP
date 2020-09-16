@@ -10,22 +10,22 @@ import styles from "../../../styles";
 
 type Props = {
     song: Song;
-    id: string;
+    navigation: any;
 };
 
-const SongActions: FC<Props> = ({song, id}) => {
+const SongActions: FC<Props> = ({song, navigation}) => {
     const dispatch = useDispatch();
 
     return (
         <>
             <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 60, marginTop: 50}}>
-                <TouchableOpacity style={styles.songAction} onPress={() => {
+                <TouchableOpacity style={styles.action} onPress={() => {
                     dispatch(thunkUpdateSong({...song, isExcluded: true}));
                 }}>
                     <MaterialIcons name="delete" size={24} color="#D3D4D6"/>
                     <Text size={6} numberOfLines={1}>Exclude</Text>
                 </TouchableOpacity>
-                <View style={styles.songAction}>
+                <View style={styles.action}>
                     {
                         song.isFav ?
                             <TouchableOpacity onPress={() => {
@@ -42,21 +42,25 @@ const SongActions: FC<Props> = ({song, id}) => {
                             </TouchableOpacity>
                     }
                 </View>
-                <View style={styles.songAction}>
+                <TouchableOpacity style={styles.action} onPress={() => {
+                    navigation.navigate('Lyrics', {
+                        id: song.id
+                    })
+                }}>
                     <MaterialIcons name="short-text" size={24} color="#D3D4D6"/>
                     <Text size={6} numberOfLines={1}>Load Lyrics</Text>
-                </View>
+                </TouchableOpacity>
             </View>
             <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 60, marginTop: 20}}>
-                <View style={styles.songAction}>
+                <View style={styles.action}>
                     <MaterialIcons name="image" size={24} color="#D3D4D6"/>
                     <Text size={6} numberOfLines={1}>Set Cover</Text>
                 </View>
-                <View style={styles.songAction}>
+                <View style={styles.action}>
                     <MaterialIcons name="music-video" size={24} color="#D3D4D6"/>
                     <Text size={6} numberOfLines={1}>Set Video</Text>
                 </View>
-                <View style={styles.songAction}>
+                <View style={styles.action}>
                     <MaterialIcons name="edit" size={24} color="#D3D4D6"/>
                     <Text size={6} numberOfLines={1}>Edit</Text>
                 </View>

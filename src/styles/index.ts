@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
         color: '#D3D4D6',
         fontSize: 12,
         paddingVertical: 5,
-        paddingHorizontal: 10,
-        borderRadius: 30,
+        paddingHorizontal: 15,
+        borderRadius: 5,
         marginHorizontal: 10,
         width: Dimensions.get('window').width - Dimensions.get('window').width * 3 / 21 - 20 - 50
     },
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%'
     },
-    songAction: {
+    action: {
         flex: 1,
         padding: 5,
         alignItems: 'center',

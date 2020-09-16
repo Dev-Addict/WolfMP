@@ -31,7 +31,7 @@ const SongScreen: FC<Props> = ({navigation}) => {
                 minHeight: Dimensions.get('window').height
             }]}>
                 <SongDetail song={song}/>
-                <SongActions song={song} id={id}/>
+                <SongActions song={song} navigation={navigation}/>
                 <SongSlider position={position} song={song} playbackInstance={playbackInstance}/>
                 <SongController isPlaying={isPlaying} playMode={playMode}/>
             </View>

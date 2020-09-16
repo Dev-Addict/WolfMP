@@ -1,4 +1,5 @@
 import * as MediaLibrary from 'expo-media-library';
+import * as FileSystem from 'expo-file-system';
 import {Alert} from 'react-native';
 import {Action} from "redux";
 import {ThunkAction} from "redux-thunk";
@@ -13,6 +14,9 @@ import {Song} from "./store/songs/types";
 import {Audio, AVPlaybackStatus} from "expo-av";
 import {setBuffering, setCurrentId, setCurrentPosition, setPlaybackInstance, setPlaying} from "./store/audio/actions";
 import SettingsST from "./models/SettingsST";
+import Lyrics from "./models/Lyrics";
+import BeautifyNumber from "./utils/BeautifyNumber";
+import lrcParser from "./utils/lrcParser";
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType,
     RootState,
@@ -50,12 +54,19 @@ export const thunkInitializeApp = (): AppThunk<void> => async (dispatch, getStat
     for (const audio of audios) {
         if (dbSongs.map(({clientId}: any) => clientId.toString()).includes(audio.id)) {
             const dbSong = dbSongs.find(({clientId}: any) => clientId.toString() === audio.id);
+
+            let lyrics: Lyrics | undefined;
+
+            if (dbSong.lrcUri)
+                lyrics = lrcParser(await FileSystem.readAsStringAsync(dbSong.lrcUri));
+
             songs.push({
                 ...dbSong,
                 isExcluded: dbSong.isExcluded === 'yes',
                 isFav: dbSong.isFav === 'yes',
                 id: audio.id,
-                dbId: dbSong.id.toString()
+                dbId: dbSong.id.toString(),
+                lyrics
             });
         } else {
             const musicInfo = await MusicInfo.getMusicInfoAsync(audio.uri);
@@ -93,7 +104,6 @@ export const thunkInitializeApp = (): AppThunk<void> => async (dispatch, getStat
 };
 
 export const thunkLoadSong = (id: string, shouldPlay: boolean = false): AppThunk<void> => async (dispatch, getState) => {
-
     dispatch(setCurrentId(id));
 
     const {audio: {isPlaying, volume, playbackInstance: prevPlaybackInstance}, songs: {songs}}: RootState = getState();
@@ -113,12 +123,8 @@ export const thunkLoadSong = (id: string, shouldPlay: boolean = false): AppThunk
 
             if (playbackStatus.didJustFinish && !playbackStatus.isLooping)
                 dispatch(thunkNextTrack());
-            if (playbackStatus.shouldPlay && !playbackStatus.isPlaying && playbackStatus.isLoaded && !playbackStatus.isBuffering && playbackStatus.didJustFinish)
-                try {
-                    playbackInstance.playAsync();
-                } catch(err) {
-                    // I dont care
-                }
+            if (playbackStatus.shouldPlay && !playbackStatus.isPlaying && playbackStatus.isLoaded && !playbackStatus.isBuffering && !playbackStatus.didJustFinish)
+                playbackInstance.playAsync();
         }
     });
     await playbackInstance.loadAsync({
@@ -155,6 +161,7 @@ export const thunkNextTrack = (): AppThunk<void> => async (dispatch, getState) =
 };
 
 export const thunkUpdateSong = (song: Song): AppThunk<void> => async (dispatch) => {
+    dispatch(setLoadingState(true));
     await updateSong(song.dbId, {
         clientId: song.id,
         title: song.title,
@@ -171,4 +178,52 @@ export const thunkUpdateSong = (song: Song): AppThunk<void> => async (dispatch) 
     });
 
     dispatch(updateLocalSong(song));
+    dispatch(setLoadingState(false));
+};
+
+export const thunkSaveLyrics = (song: Song, lyrics: Lyrics): AppThunk<void> => async dispatch => {
+    dispatch(setLoadingState(true));
+
+    let content = `[ar:${
+        song.artist || 'unknown'
+    }]\n[al:${
+        song.album
+    }]\n[ti:${
+        song.title
+    }]\n[length:${
+        song.duration
+    }]\n[by:Written by WolfMP Community]\n[re:WolfMP]\n`;
+
+    for (const {time, text} of lyrics)
+        content += `\n[${
+            BeautifyNumber(Math.round(time! / 3600))
+        }:${
+            BeautifyNumber(Math.round(time! % 3600 / 60))
+        }:${
+            BeautifyNumber(Math.round(time! % 60))
+        }]${text}`;
+
+    const folderUri = FileSystem.documentDirectory + 'lrcs';
+
+    try {
+        await FileSystem.makeDirectoryAsync(folderUri, {
+            intermediates: true
+        });
+    } catch (err) {
+        // I don't care
+    }
+
+    const fileUri = `${folderUri}/${song.id}.lrc`;
+
+    try {
+        await FileSystem.writeAsStringAsync(fileUri, content, {
+            encoding: FileSystem.EncodingType.UTF8
+        });
+    } catch (err) {
+        // I don't care
+    }
+
+    dispatch(thunkUpdateSong({...song, lrcUri: fileUri, lyrics}));
+
+    dispatch(setLoadingState(false));
 };
