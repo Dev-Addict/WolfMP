@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import {View} from "react-native";
 
-import ArtistList from "../../components/helpers/Song/ArtistList";
+import ArtistList from "../../components/helpers/song/ArtistList";
 import styles from "../../styles";
 
 type Props = {

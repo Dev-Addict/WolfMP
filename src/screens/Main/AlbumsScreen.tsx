@@ -1,7 +1,7 @@
-import React, {FC, useState} from "react";
+import React, {FC} from "react";
 import {View} from "react-native";
-import SearchBox from "../../components/helpers/SearchBox";
-import AlbumList from "../../components/helpers/Song/AlbumList";
+
+import AlbumList from "../../components/helpers/song/AlbumList";
 import styles from "../../styles";
 
 type Props = {

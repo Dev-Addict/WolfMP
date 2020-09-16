@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import {View} from "react-native";
-import GenresList from "../../components/helpers/Song/GenreList";
+import GenresList from "../../components/helpers/song/GenreList";
 import styles from "../../styles";
 
 type Props = {
