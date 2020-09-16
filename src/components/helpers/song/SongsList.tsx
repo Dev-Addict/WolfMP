@@ -21,7 +21,7 @@ type Props = {
 const SongsList: FC<Props> = ({navigation, route}) => {
     const [searchValue, setSearchValue] = useState('');
 
-    let songs = useSelector(({songs: {songs}}: RootState) => songs);
+    let songs = useSelector(({songs: {songs}}: RootState) => songs).filter(({isExcluded}) => !isExcluded);
     let albumArtists;
 
     let playScope = PlayScope.NONE;

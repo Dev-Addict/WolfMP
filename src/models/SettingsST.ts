@@ -64,13 +64,13 @@ export default class SettingsST {
     private filterPlayOrder = (): Song[] => {
         switch (this.playScope) {
             case PlayScope.NONE:
-                return this.playOrder;
+                return this.playOrder.filter(({isExcluded}) => !isExcluded);
             case PlayScope.ALBUM:
-                return this.playOrder.filter(({album}) => album === this.scopeValue);
+                return this.playOrder.filter(({isExcluded}) => !isExcluded).filter(({album}) => album === this.scopeValue);
             case PlayScope.ARTIST:
-                return this.playOrder.filter(({artist}) => artist === this.scopeValue);
+                return this.playOrder.filter(({isExcluded}) => !isExcluded).filter(({artist}) => artist === this.scopeValue);
             case PlayScope.GENRE:
-                return this.playOrder.filter(({genre}) => genre === this.scopeValue);
+                return this.playOrder.filter(({isExcluded}) => !isExcluded).filter(({genre}) => genre === this.scopeValue);
         }
     }
 }

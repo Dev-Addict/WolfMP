@@ -20,7 +20,7 @@ type Props = {
 const AlbumList: FC<Props> = ({navigation, leadAlbum, isHorizontal = false, artist, hideSearchBar = false}) => {
     const [searchValue, setSearchValue] = useState('');
 
-    const songs = useSelector(({songs: {songs}}: RootState) => songs);
+    const songs = useSelector(({songs: {songs}}: RootState) => songs).filter(({isExcluded}) => !isExcluded);
     let albums: Album[];
 
     if (leadAlbum)

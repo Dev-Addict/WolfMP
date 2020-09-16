@@ -17,7 +17,7 @@ type Props = {
 const GenresList: FC<Props> = ({navigation}) => {
     const [searchValue, setSearchValue] = useState('');
 
-    const songs = useSelector(({songs: {songs}}: RootState) => songs);
+    const songs = useSelector(({songs: {songs}}: RootState) => songs).filter(({isExcluded}) => !isExcluded);
     const genres: Genre[] = filterGenres(Array.from(new Set(songs.map(({genre}) => genre)))
         .map(genreName => ({name: genreName || 'unknown'})), searchValue);
 

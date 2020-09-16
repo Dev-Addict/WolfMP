@@ -19,10 +19,12 @@ const SongActions: FC<Props> = ({song, id}) => {
     return (
         <>
             <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 60, marginTop: 50}}>
-                <View style={styles.songAction}>
+                <TouchableOpacity style={styles.songAction} onPress={() => {
+                    dispatch(thunkUpdateSong({...song, isExcluded: true}));
+                }}>
                     <MaterialIcons name="delete" size={24} color="#D3D4D6"/>
                     <Text size={6} numberOfLines={1}>Exclude</Text>
-                </View>
+                </TouchableOpacity>
                 <View style={styles.songAction}>
                     {
                         song.isFav ?

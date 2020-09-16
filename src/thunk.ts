@@ -114,7 +114,11 @@ export const thunkLoadSong = (id: string, shouldPlay: boolean = false): AppThunk
             if (playbackStatus.didJustFinish && !playbackStatus.isLooping)
                 dispatch(thunkNextTrack());
             if (playbackStatus.shouldPlay && !playbackStatus.isPlaying && playbackStatus.isLoaded && !playbackStatus.isBuffering && playbackStatus.didJustFinish)
-                playbackInstance.playAsync();
+                try {
+                    playbackInstance.playAsync();
+                } catch(err) {
+                    // I dont care
+                }
         }
     });
     await playbackInstance.loadAsync({

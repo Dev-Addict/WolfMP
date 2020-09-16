@@ -17,7 +17,7 @@ type Props = {
 const ArtistList: FC<Props> = ({navigation, isFromAlbum = false, albumArtists}) => {
     const [searchValue, setSearchValue] = useState('');
 
-    const songs = useSelector(({songs: {songs}}: RootState) => songs);
+    const songs = useSelector(({songs: {songs}}: RootState) => songs).filter(({isExcluded}) => !isExcluded);
     let artists: Artist[];
     if (isFromAlbum)
         artists = albumArtists!.split('/').map(artistName => ({

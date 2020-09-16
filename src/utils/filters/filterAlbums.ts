@@ -1,7 +1,7 @@
 import Album from "../../models/Album";
 
-const filterAlbums = (songs: Album[], searchValue: string): Album[] => {
-    return songs.filter(({name}) => name.toLowerCase().includes(searchValue.toLowerCase()));
+const filterAlbums = (albums: Album[], searchValue: string): Album[] => {
+    return albums.filter(({name}) => name.toLowerCase().includes(searchValue.toLowerCase()));
 };
 
 export default filterAlbums;
