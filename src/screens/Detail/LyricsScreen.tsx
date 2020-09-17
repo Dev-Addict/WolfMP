@@ -1,4 +1,4 @@
-import React, {useState, FC} from "react";
+import React, {useState, FC, useEffect} from "react";
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import {Alert, FlatList, KeyboardAvoidingView, View} from 'react-native';
@@ -21,7 +21,6 @@ type Props = {
 
 const initialState: Lyrics = [];
 const LyricsScreen: FC<Props> = ({navigation}) => {
-
     const dispatch = useDispatch();
 
     const {currentId, playbackInstance, isPlaying, playMode} = useSelector(({audio}: RootState) => audio);
@@ -29,6 +28,12 @@ const LyricsScreen: FC<Props> = ({navigation}) => {
     const position = Math.round(useSelector(({audio: {currentPosition}}: RootState) => currentPosition) / 1000);
 
     const [lyrics, setLyrics] = useState(song.lyrics || initialState);
+
+    useEffect(() => {
+        navigation.setOptions({
+            title: song.title
+        });
+    }, [song]);
 
     const onLrc = async () => {
         dispatch(setLoadingState(true));

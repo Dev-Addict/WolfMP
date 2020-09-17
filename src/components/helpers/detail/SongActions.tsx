@@ -43,15 +43,16 @@ const SongActions: FC<Props> = ({song, navigation}) => {
                     }
                 </View>
                 <TouchableOpacity style={styles.action} onPress={() => {
-                    navigation.navigate('Lyrics', {
-                        id: song.id
-                    })
+                    navigation.navigate('Lyrics')
                 }}>
                     <MaterialIcons name="short-text" size={24} color="#D3D4D6"/>
                     <Text size={6} numberOfLines={1}>Load Lyrics</Text>
                 </TouchableOpacity>
             </View>
-            <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 60, marginTop: 20}}>
+            <TouchableOpacity style={{flexDirection: 'row', width: Dimensions.get('window').width - 60, marginTop: 20}}
+                              onPress={() => {
+                                  navigation.navigate('ImagePicker');
+                              }}>
                 <View style={styles.action}>
                     <MaterialIcons name="image" size={24} color="#D3D4D6"/>
                     <Text size={6} numberOfLines={1}>Set Cover</Text>
@@ -64,7 +65,7 @@ const SongActions: FC<Props> = ({song, navigation}) => {
                     <MaterialIcons name="edit" size={24} color="#D3D4D6"/>
                     <Text size={6} numberOfLines={1}>Edit</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
         </>
     );
 };

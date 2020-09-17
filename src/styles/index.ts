@@ -83,6 +83,16 @@ const styles = StyleSheet.create({
     songActionTouchable: {
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    button: {
+        padding: 10,
+        borderRadius: 5,
+        borderWidth: 2,
+        borderColor: '#D3D4D6',
+        margin: 20,
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center'
     }
 });
 
