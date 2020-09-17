@@ -5,9 +5,10 @@ import {Song} from "../../../store/songs/types";
 
 type Props = {
     song: Song;
+    showImage?: boolean;
 };
 
-const SongDetail: FC<Props> = ({song}) => {
+const SongDetail: FC<Props> = ({song, showImage = true}) => {
     return (
         <>
             <View style={{alignItems: 'center', marginBottom: 50}}>
@@ -15,6 +16,7 @@ const SongDetail: FC<Props> = ({song}) => {
                 <Text size={4} numberOfLines={1}>Artist: {song.artist || 'unknown'}</Text>
                 <Text size={4} numberOfLines={1}>Genre: {song.genre || 'unknown'}</Text>
             </View>
+            {showImage &&
             <View style={{backgroundColor: '#D3D4D6', borderRadius: 10, borderWidth: 2, borderColor: '#D3D4D6'}}>
                 <Image source={{
                     uri: song.coverUri
@@ -24,6 +26,7 @@ const SongDetail: FC<Props> = ({song}) => {
                     borderRadius: 10
                 }}/>
             </View>
+            }
         </>
     );
 };

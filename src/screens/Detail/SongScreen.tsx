@@ -9,6 +9,7 @@ import SongSlider from "../../components/helpers/detail/SongSlider";
 import SongController from "../../components/helpers/detail/SongController";
 import SongDetail from "../../components/helpers/detail/SongDetail";
 import LyricsShower from "../../components/helpers/detail/LyricsShower";
+import VideoPlayer from "../../components/helpers/detail/VideoPlayer";
 
 type Props = {
     route: any;
@@ -31,11 +32,18 @@ const SongScreen: FC<Props> = ({navigation}) => {
                 alignItems: 'center',
                 minHeight: Dimensions.get('window').height
             }]}>
-                <SongDetail song={song}/>
+                <SongDetail song={song} showImage={!song.videoUri}/>
+                {song.videoUri &&
+                <VideoPlayer song={song} position={position}/>
+                }
                 <LyricsShower lyrics={song.lyrics} position={position}/>
                 <SongActions song={song} navigation={navigation}/>
-                <SongSlider position={position} song={song} playbackInstance={playbackInstance}/>
-                <SongController isPlaying={isPlaying} playMode={playMode}/>
+                {!song.videoUri &&
+                <>
+                    <SongSlider position={position} song={song} playbackInstance={playbackInstance}/>
+                    < SongController isPlaying={isPlaying} playMode={playMode}/>
+                </>
+                }
             </View>
         </ScrollView>
     );

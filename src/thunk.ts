@@ -283,7 +283,7 @@ export const thunkSaveVideo = (video: string, song: Song): AppThunk<void> => asy
         // I don't care
     }
 
-    dispatch(thunkUpdateSong({...song, coverUri: fileUri}));
+    dispatch(thunkUpdateSong({...song, videoUri: fileUri}));
 
     dispatch(setLoadingState(false));
 };

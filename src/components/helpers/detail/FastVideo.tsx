@@ -13,8 +13,10 @@ const FastVideo: FC<Props> = ({uri}) => {
             width: Dimensions.get('window').width - 60,
             height: (Dimensions.get('window').width - 60) * 9 / 16
         }}>
+            {!!uri &&
             <Video source={{uri}} shouldPlay={true} isMuted={true} resizeMode="cover" focusable={false}
                    isLooping={true} style={{width: '100%', height: '100%', borderRadius: 10}}/>
+            }
         </View>
     );
 };
