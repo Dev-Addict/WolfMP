@@ -5,6 +5,7 @@ import SongScreen from "../screens/Detail/SongScreen";
 import EditScreen from "../screens/Detail/EditScreen";
 import LyricsScreen from "../screens/Detail/LyricsScreen";
 import ImagePickerScreen from "../screens/Detail/ImagePickerScreen";
+import VideoPickerScreen from "../screens/Detail/VideoPickerScreen";
 
 const DetailStack = createStackNavigator();
 
@@ -20,6 +21,7 @@ const DetailNavigation = () => {
             <DetailStack.Screen name="Edit" component={EditScreen}/>
             <DetailStack.Screen name="Lyrics" component={LyricsScreen}/>
             <DetailStack.Screen name="ImagePicker" component={ImagePickerScreen}/>
+            <DetailStack.Screen name="VideoPicker" component={VideoPickerScreen}/>
         </DetailStack.Navigator>
     );
 };

@@ -88,15 +88,11 @@ const ImagePickerScreen: FC<Props> = ({navigation}) => {
                 <SongSlider position={position} song={song} playbackInstance={playbackInstance}/>
                 <SongController isPlaying={isPlaying} playMode={playMode}/>
                 <TouchableOpacity onPress={onCamera} style={styles.button}>
-                    <Text>
-                        Use Camera
-                    </Text>
+                    <Text>Use Camera</Text>
                     <MaterialIcons name="camera-alt" size={16} color="#D3D4D6" style={{marginHorizontal: 5}}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={onGallery} style={styles.button}>
-                    <Text>
-                        Use Gallery
-                    </Text>
+                    <Text>Use Gallery</Text>
                     <MaterialIcons name="photo-library" size={16} color="#D3D4D6" style={{marginHorizontal: 5}}/>
                 </TouchableOpacity>
                 <View style={{

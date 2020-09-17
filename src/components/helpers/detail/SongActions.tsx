@@ -49,23 +49,24 @@ const SongActions: FC<Props> = ({song, navigation}) => {
                     <Text size={6} numberOfLines={1}>Load Lyrics</Text>
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity style={{flexDirection: 'row', width: Dimensions.get('window').width - 60, marginTop: 20}}
-                              onPress={() => {
-                                  navigation.navigate('ImagePicker');
-                              }}>
-                <View style={styles.action}>
+            <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 60, marginTop: 20}}>
+                <TouchableOpacity style={styles.action} onPress={() => {
+                    navigation.navigate('ImagePicker');
+                }}>
                     <MaterialIcons name="image" size={24} color="#D3D4D6"/>
                     <Text size={6} numberOfLines={1}>Set Cover</Text>
-                </View>
-                <View style={styles.action}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.action} onPress={() => {
+                    navigation.navigate('VideoPicker');
+                }}>
                     <MaterialIcons name="music-video" size={24} color="#D3D4D6"/>
                     <Text size={6} numberOfLines={1}>Set Video</Text>
-                </View>
+                </TouchableOpacity>
                 <View style={styles.action}>
                     <MaterialIcons name="edit" size={24} color="#D3D4D6"/>
                     <Text size={6} numberOfLines={1}>Edit</Text>
                 </View>
-            </TouchableOpacity>
+            </View>
         </>
     );
 };

@@ -257,3 +257,33 @@ export const thunkSaveCover = (image: string, song: Song): AppThunk<void> => asy
 
     dispatch(setLoadingState(false));
 };
+
+export const thunkSaveVideo = (video: string, song: Song): AppThunk<void> => async dispatch => {
+    dispatch(setLoadingState(true));
+
+    const fileExt = video.split('/').pop()!.split('.').pop()!;
+    const folderUri = FileSystem.documentDirectory + 'videos';
+
+    try {
+        await FileSystem.makeDirectoryAsync(folderUri, {
+            intermediates: true
+        });
+    } catch (err) {
+        // I don't care
+    }
+
+    const fileUri = `${folderUri}/${song.id}.${fileExt}`;
+
+    try {
+        await FileSystem.moveAsync({
+            from: video,
+            to: fileUri
+        });
+    } catch (err) {
+        // I don't care
+    }
+
+    dispatch(thunkUpdateSong({...song, coverUri: fileUri}));
+
+    dispatch(setLoadingState(false));
+};
