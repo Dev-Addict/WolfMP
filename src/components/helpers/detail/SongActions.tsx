@@ -62,10 +62,12 @@ const SongActions: FC<Props> = ({song, navigation}) => {
                     <MaterialIcons name="music-video" size={24} color="#D3D4D6"/>
                     <Text size={6} numberOfLines={1}>Set Video</Text>
                 </TouchableOpacity>
-                <View style={styles.action}>
+                <TouchableOpacity style={styles.action} onPress={() => {
+                    navigation.navigate('Edit')
+                }}>
                     <MaterialIcons name="edit" size={24} color="#D3D4D6"/>
                     <Text size={6} numberOfLines={1}>Edit</Text>
-                </View>
+                </TouchableOpacity>
             </View>
         </>
     );
