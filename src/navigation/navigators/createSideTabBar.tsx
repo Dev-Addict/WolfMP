@@ -22,6 +22,7 @@ type IconProps = {
 type TabNavigationOptions = {
     title?: string;
     icon: FC<IconProps>;
+    isFav?: boolean;
 };
 
 type TabNavigationEventMap = {
@@ -31,14 +32,19 @@ type TabNavigationEventMap = {
     };
 };
 
+type SideTabRouterOptions = TabRouterOptions & {
+    isFav?: boolean;
+};
+
 type Props = DefaultNavigatorOptions<TabNavigationOptions> &
-    TabRouterOptions;
+    SideTabRouterOptions;
 
 const SideTabNavigator = (
     {
         initialRouteName,
         children,
-        screenOptions
+        screenOptions,
+        isFav = false
     }: Props) => {
     const {state, navigation, descriptors} = useNavigationBuilder<TabNavigationState,
         TabRouterOptions,
@@ -51,10 +57,9 @@ const SideTabNavigator = (
 
     return (
         <View style={{flexDirection: 'row'}}>
-            <View style={styles.sideBar}>
+            <View style={[styles.sideBar, isFav ? {backgroundColor: '#2A2E33'} : {}]}>
                 {state.routes.map(route => {
                     const Icon = descriptors[route.key].options.icon;
-
                     const isSelected = state.routes[state.index].key === route.key;
 
                     return (
@@ -77,7 +82,7 @@ const SideTabNavigator = (
                                     });
                                 }
                             }}
-                            style={{flex: 1}}
+                            style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
                         >
                             <View style={{
                                 alignItems: 'center'
@@ -95,7 +100,9 @@ const SideTabNavigator = (
                 <View style={{height: Dimensions.get('window').height - 60}}>
                     {descriptors[state.routes[state.index].key].render()}
                 </View>
+                {!isFav &&
                 <SongController navigation={navigation}/>
+                }
             </View>
         </View>
     );

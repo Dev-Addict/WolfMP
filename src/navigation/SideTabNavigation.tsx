@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 import {createStackNavigator} from "@react-navigation/stack";
 import {MaterialIcons, Ionicons, MaterialCommunityIcons, FontAwesome5} from '@expo/vector-icons';
 
@@ -9,44 +9,74 @@ import ArtistsScreen from "../screens/Main/ArtistsScreen";
 import GenresScreen from "../screens/Main/GenresScreen";
 import PlaylistsScreen from "../screens/Main/PlaylistsScreen";
 import SettingsScreen from "../screens/Main/SettingsScreen";
-import FavoritesScreen from "../screens/Main/FavoritesScreen";
+
+type StackProps = {
+    isFav?: boolean;
+};
 
 const AlbumsStack = createStackNavigator();
 
-const Albums = () => {
+const Albums: FC<StackProps> = ({isFav}) => {
     return (
         <AlbumsStack.Navigator screenOptions={{
             headerShown: false
         }}>
-            <AlbumsStack.Screen name="Albums" component={AlbumsScreen}/>
-            <AlbumsStack.Screen name="Songs" component={SongsScreen}/>
+            <AlbumsStack.Screen name="Albums" component={AlbumsScreen} initialParams={{isFav}}/>
+            <AlbumsStack.Screen name="Songs" component={SongsScreen} initialParams={{isFav}}/>
         </AlbumsStack.Navigator>
     );
 };
 
 const ArtistsStack = createStackNavigator();
 
-const Artists = () => {
+const Artists: FC<StackProps> = ({isFav}) => {
     return (
         <ArtistsStack.Navigator screenOptions={{
             headerShown: false
         }}>
-            <ArtistsStack.Screen name="Artists" component={ArtistsScreen}/>
-            <ArtistsStack.Screen name="Songs" component={SongsScreen}/>
+            <ArtistsStack.Screen name="Artists" component={ArtistsScreen} initialParams={{isFav}}/>
+            <ArtistsStack.Screen name="Songs" component={SongsScreen} initialParams={{isFav}}/>
         </ArtistsStack.Navigator>
     );
 };
 
 const GenresStack = createStackNavigator();
 
-const Genres = () => {
+const Genres: FC<StackProps> = ({isFav}) => {
     return (
         <GenresStack.Navigator screenOptions={{
             headerShown: false
         }}>
-            <GenresStack.Screen name="Genres" component={GenresScreen}/>
-            <GenresStack.Screen name="Songs" component={SongsScreen}/>
+            <GenresStack.Screen name="Genres" component={GenresScreen} initialParams={{isFav}}/>
+            <GenresStack.Screen name="Songs" component={SongsScreen} initialParams={{isFav}}/>
         </GenresStack.Navigator>
+    );
+};
+
+const FavoritesNavigator = createSideTabBar();
+
+const FavAlbums = () => <Albums isFav={true}/>;
+const FavArtists = () => <Artists isFav={true}/>;
+const FavGenres = ()=> <Genres isFav={true}/>;
+
+const FavoritesNavigation = () => {
+    return (
+        <FavoritesNavigator.Navigator initialRouteName="Songs" isFav={true}>
+            <FavoritesNavigator.Screen name="Songs" component={SongsScreen} options={{
+                icon: ({color, size}) => (<MaterialIcons name="library-music" size={size} color={color}/>)
+            }} initialParams={{
+                isFav: true
+            }}/>
+            <FavoritesNavigator.Screen name="Albums" component={FavAlbums} options={{
+                icon: ({color, size}) => (<Ionicons name="ios-albums" size={size} color={color}/>)
+            }}/>
+            <FavoritesNavigator.Screen name="Artists" component={FavArtists} options={{
+                icon: ({color, size}) => (<MaterialCommunityIcons name="artist" size={size} color={color}/>)
+            }}/>
+            <FavoritesNavigator.Screen name="Genres" component={FavGenres} options={{
+                icon: ({color, size}) => (<FontAwesome5 name="compact-disc" size={size} color={color}/>)
+            }}/>
+        </FavoritesNavigator.Navigator>
     );
 };
 
@@ -70,7 +100,7 @@ const SideTabNavigation = () => {
             <SideTabNavigator.Screen name="Playlists" component={PlaylistsScreen} options={{
                 icon: ({color, size}) => (<MaterialCommunityIcons name="playlist-music" size={size} color={color}/>)
             }}/>
-            <SideTabNavigator.Screen name="Favorites" component={FavoritesScreen} options={{
+            <SideTabNavigator.Screen name="Favorites" component={FavoritesNavigation} options={{
                 icon: ({color, size}) => (<MaterialIcons name="favorite" size={size} color={color}/>)
             }}/>
             <SideTabNavigator.Screen name="Settings" component={SettingsScreen} options={{

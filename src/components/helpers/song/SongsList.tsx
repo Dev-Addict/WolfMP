@@ -24,6 +24,9 @@ const SongsList: FC<Props> = ({navigation, route}) => {
     let songs = useSelector(({songs: {songs}}: RootState) => songs).filter(({isExcluded}) => !isExcluded);
     let albumArtists;
 
+    if (route?.params?.isFav)
+        songs = songs.filter(song => song.isFav);
+
     let playScope = PlayScope.NONE;
     let scopeValue: string | undefined = undefined;
 
@@ -52,15 +55,15 @@ const SongsList: FC<Props> = ({navigation, route}) => {
 
     return (
         <>
-            <SearchBox value={searchValue} setValue={setSearchValue}/>
+            <SearchBox value={searchValue} setValue={setSearchValue} isFav={route?.params?.isFav}/>
             {route?.params?.isFromAlbumScreen &&
             <>
-                <ArtistList navigation={navigation} isFromAlbum={true} albumArtists={albumArtists}/>
-                <AlbumList navigation={navigation} leadAlbum={route.params.album} isHorizontal={true} hideSearchBar/>
+                <ArtistList navigation={navigation} isFromAlbum={true} albumArtists={albumArtists} route={route}/>
+                <AlbumList navigation={navigation} leadAlbum={route.params.album} isHorizontal={true} hideSearchBar route={route}/>
             </>
             }
             {route?.params?.isFromArtistScreen &&
-            <AlbumList navigation={navigation} isHorizontal={true} artist={route.params.artist} hideSearchBar/>
+            <AlbumList navigation={navigation} isHorizontal={true} artist={route.params.artist} hideSearchBar route={route}/>
             }
             <FlatList data={songs} renderItem={props => <SongItem navigation={navigation} {...props} onBodyPress={(id: string) => {
                 dispatch(setPlayScope(playScope));

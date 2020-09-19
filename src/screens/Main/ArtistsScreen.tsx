@@ -6,12 +6,13 @@ import styles from "../../styles";
 
 type Props = {
     navigation: any;
+    route: any;
 };
 
-const ArtistsScreen: FC<Props> = ({navigation}) => {
+const ArtistsScreen: FC<Props> = ({navigation, route}) => {
     return (
         <View style={styles.screen}>
-            <ArtistList navigation={navigation}/>
+            <ArtistList navigation={navigation} route={route}/>
         </View>
     );
 };

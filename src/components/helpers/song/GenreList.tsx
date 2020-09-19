@@ -12,18 +12,23 @@ import filterGenres from "../../../utils/filters/filterGenres";
 
 type Props = {
     navigation: any;
+    route: any;
 };
 
-const GenresList: FC<Props> = ({navigation}) => {
+const GenresList: FC<Props> = ({navigation, route}) => {
     const [searchValue, setSearchValue] = useState('');
 
-    const songs = useSelector(({songs: {songs}}: RootState) => songs).filter(({isExcluded}) => !isExcluded);
+    let songs = useSelector(({songs: {songs}}: RootState) => songs).filter(({isExcluded}) => !isExcluded);
+
+    if (route?.params?.isFav)
+        songs = songs.filter(song => song.isFav);
+
     const genres: Genre[] = filterGenres(Array.from(new Set(songs.map(({genre}) => genre)))
         .map(genreName => ({name: genreName || 'unknown'})), searchValue);
 
     return (
         <>
-            <SearchBox value={searchValue} setValue={setSearchValue}/>
+            <SearchBox value={searchValue} setValue={setSearchValue} isFav={route?.params?.isFav}/>
             <FlatList data={genres} renderItem={props => <GenreItem navigation={navigation} {...props}/>}
                       keyExtractor={({name}: Artist) => name} removeClippedSubviews maxToRenderPerBatch={20}
                       updateCellsBatchingPeriod={200} initialNumToRender={20} windowSize={41} numColumns={2}

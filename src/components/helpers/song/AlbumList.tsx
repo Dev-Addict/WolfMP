@@ -15,13 +15,17 @@ type Props = {
     isHorizontal?: boolean;
     artist?: string;
     hideSearchBar?: boolean;
+    route: any;
 }
 
-const AlbumList: FC<Props> = ({navigation, leadAlbum, isHorizontal = false, artist, hideSearchBar = false}) => {
+const AlbumList: FC<Props> = ({navigation, leadAlbum, isHorizontal = false, artist, hideSearchBar = false, route}) => {
     const [searchValue, setSearchValue] = useState('');
 
-    const songs = useSelector(({songs: {songs}}: RootState) => songs).filter(({isExcluded}) => !isExcluded);
+    let songs = useSelector(({songs: {songs}}: RootState) => songs).filter(({isExcluded}) => !isExcluded);
     let albums: Album[];
+
+    if (route?.params?.isFav)
+        songs = songs.filter(song => song.isFav);
 
     if (leadAlbum)
         albums = createAlbumList(Array.from(new Set(songs.map(({album}) => album)))
@@ -46,7 +50,7 @@ const AlbumList: FC<Props> = ({navigation, leadAlbum, isHorizontal = false, arti
     return (
         <>
             {!leadAlbum && !artist && !hideSearchBar &&
-            <SearchBox value={searchValue} setValue={setSearchValue}/>
+            <SearchBox value={searchValue} setValue={setSearchValue} isFav={route?.params?.isFav}/>
             }
             <FlatList data={albums} renderItem={props => <AlbumItem navigation={navigation} {...props}/>}
                       keyExtractor={({name}: Album) => name} removeClippedSubviews maxToRenderPerBatch={20}

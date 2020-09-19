@@ -12,13 +12,18 @@ type Props = {
     navigation: any;
     isFromAlbum?: boolean;
     albumArtists?: string;
+    route: any;
 };
 
-const ArtistList: FC<Props> = ({navigation, isFromAlbum = false, albumArtists}) => {
+const ArtistList: FC<Props> = ({navigation, isFromAlbum = false, albumArtists, route}) => {
     const [searchValue, setSearchValue] = useState('');
 
-    const songs = useSelector(({songs: {songs}}: RootState) => songs).filter(({isExcluded}) => !isExcluded);
+    let songs = useSelector(({songs: {songs}}: RootState) => songs).filter(({isExcluded}) => !isExcluded);
     let artists: Artist[];
+
+    if (route?.params?.isFav)
+        songs = songs.filter(song => song.isFav);
+
     if (isFromAlbum)
         artists = albumArtists!.split('/').map(artistName => ({
             name: artistName || 'unknown'
@@ -35,7 +40,7 @@ const ArtistList: FC<Props> = ({navigation, isFromAlbum = false, albumArtists}) 
     return (
         <>
             {!isFromAlbum &&
-            <SearchBox value={searchValue} setValue={setSearchValue}/>
+            <SearchBox value={searchValue} setValue={setSearchValue} isFav={route?.params?.isFav}/>
             }
             <FlatList data={artists}
                       renderItem={props => <ArtistItem navigation={navigation} isHorizontal={isFromAlbum} {...props}/>}

@@ -5,12 +5,13 @@ import styles from "../../styles";
 
 type Props = {
     navigation: any;
+    route: any;
 };
 
-const GenresScreen: FC<Props> = ({navigation}) => {
+const GenresScreen: FC<Props> = ({navigation, route}) => {
     return (
         <View style={styles.screen}>
-            <GenresList navigation={navigation}/>
+            <GenresList navigation={navigation} route={route}/>
         </View>
     );
 };
