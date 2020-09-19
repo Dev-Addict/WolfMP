@@ -13,6 +13,7 @@ export interface AudioState {
     playScope: PlayScope;
     scopeValue: string | undefined;
     currentPosition: number;
+    isFav: boolean | undefined;
 }
 
 export const SET_PLAYING = 'SET_PLAYING';
@@ -24,6 +25,7 @@ export const SET_PLAY_MODE = 'SET_PLAY_MODE';
 export const SET_PLAY_SCOPE = 'SET_PLAY_SCOPE';
 export const SET_SCOPE_VALUE = 'SET_SCOPE_VALUE';
 export const SET_CURRENT_POSITION = 'SET_CURRENT_POSITION';
+export const SET_FAV = 'SET_FAV';
 
 interface setPlaying {
     type: typeof SET_PLAYING;
@@ -70,6 +72,11 @@ interface setCurrentPosition {
     payload: number;
 }
 
+interface setFav {
+    type: typeof SET_FAV;
+    payload: boolean | undefined
+}
+
 export type AudioActionTypes =
     setPlaying
     | setPlaybackInstance
@@ -79,4 +86,5 @@ export type AudioActionTypes =
     | setPlayMode
     | setPlayScope
     | setScopeValue
-    | setCurrentPosition;
+    | setCurrentPosition
+    | setFav;

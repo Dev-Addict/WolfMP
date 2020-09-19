@@ -9,6 +9,7 @@ export default class SettingsST {
     private playMode: PlayMode = PlayMode.REPEAT;
     private playScope: PlayScope = PlayScope.NONE;
     private scopeValue: string | undefined = undefined;
+    private isFav: boolean | undefined = undefined;
 
     private constructor() {
     }
@@ -61,16 +62,25 @@ export default class SettingsST {
         this.scopeValue = scopeValue;
     };
 
+    setFav = (isFav: boolean | undefined) => {
+        this.isFav = isFav;
+    };
+
     private filterPlayOrder = (): Song[] => {
+        let playOrder = this.playOrder;
+
+        if (this.isFav)
+            playOrder = playOrder.filter(song => song.isFav);
+
         switch (this.playScope) {
             case PlayScope.NONE:
-                return this.playOrder.filter(({isExcluded}) => !isExcluded);
+                return playOrder.filter(({isExcluded}) => !isExcluded);
             case PlayScope.ALBUM:
-                return this.playOrder.filter(({isExcluded}) => !isExcluded).filter(({album}) => album === this.scopeValue);
+                return playOrder.filter(({isExcluded}) => !isExcluded).filter(({album}) => album === this.scopeValue);
             case PlayScope.ARTIST:
-                return this.playOrder.filter(({isExcluded}) => !isExcluded).filter(({artist}) => artist === this.scopeValue);
+                return playOrder.filter(({isExcluded}) => !isExcluded).filter(({artist}) => artist === this.scopeValue);
             case PlayScope.GENRE:
-                return this.playOrder.filter(({isExcluded}) => !isExcluded).filter(({genre}) => genre === this.scopeValue);
+                return playOrder.filter(({isExcluded}) => !isExcluded).filter(({genre}) => genre === this.scopeValue);
         }
     }
 }

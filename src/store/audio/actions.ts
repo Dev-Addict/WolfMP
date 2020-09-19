@@ -4,6 +4,7 @@ import {
     SET_BUFFERING,
     SET_CURRENT_ID,
     SET_CURRENT_POSITION,
+    SET_FAV,
     SET_PLAY_MODE,
     SET_PLAY_SCOPE,
     SET_PLAYBACK_INSTANCE,
@@ -57,4 +58,9 @@ export const setScopeValue = (scopeValue: string | undefined): AudioActionTypes 
 export const setCurrentPosition = (currentPosition: number): AudioActionTypes => ({
     type: SET_CURRENT_POSITION,
     payload: currentPosition
+});
+
+export const setFav = (isFav: boolean | undefined): AudioActionTypes => ({
+    type: SET_FAV,
+    payload: isFav
 });

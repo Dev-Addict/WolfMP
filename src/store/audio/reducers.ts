@@ -4,6 +4,7 @@ import {
     SET_BUFFERING,
     SET_CURRENT_ID,
     SET_CURRENT_POSITION,
+    SET_FAV,
     SET_PLAY_MODE,
     SET_PLAY_SCOPE,
     SET_PLAYBACK_INSTANCE,
@@ -24,7 +25,8 @@ const initialState: AudioState = {
     playMode: PlayMode.REPEAT,
     playScope: PlayScope.NONE,
     scopeValue: undefined,
-    currentPosition: 0
+    currentPosition: 0,
+    isFav: undefined
 };
 
 export const audioReducer = (
@@ -53,6 +55,9 @@ export const audioReducer = (
         case SET_SCOPE_VALUE:
             SettingsST.getInstance().setScopeValue(action.payload);
             return {...state, scopeValue: action.payload};
+        case SET_FAV:
+            SettingsST.getInstance().setFav(action.payload);
+            return {...state, isFav: action.payload};
         default:
             return state;
     }

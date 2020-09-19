@@ -10,7 +10,7 @@ import AlbumList from "./AlbumList";
 import filterSongs from "../../../utils/filters/filterSongs";
 import ArtistList from "./ArtistList";
 import PlayScope from "../../../models/PlayScope";
-import {setPlayScope, setScopeValue} from "../../../store/audio/actions";
+import {setFav, setPlayScope, setScopeValue} from "../../../store/audio/actions";
 import {thunkLoadSong} from "../../../thunk";
 
 type Props = {
@@ -68,6 +68,7 @@ const SongsList: FC<Props> = ({navigation, route}) => {
             <FlatList data={songs} renderItem={props => <SongItem navigation={navigation} {...props} onBodyPress={(id: string) => {
                 dispatch(setPlayScope(playScope));
                 dispatch(setScopeValue(scopeValue));
+                dispatch(setFav(route?.params?.isFav));
                 dispatch(thunkLoadSong(id, true));
             }}/>}
                       keyExtractor={({id}: Song) => id} removeClippedSubviews maxToRenderPerBatch={20}

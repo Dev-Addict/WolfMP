@@ -57,7 +57,7 @@ const SideTabNavigator = (
 
     return (
         <View style={{flexDirection: 'row'}}>
-            <View style={[styles.sideBar, isFav ? {backgroundColor: '#2A2E33'} : {}]}>
+            <View style={[styles.sideBar, isFav ? {backgroundColor: '#282C31'} : {}]}>
                 {state.routes.map(route => {
                     const Icon = descriptors[route.key].options.icon;
                     const isSelected = state.routes[state.index].key === route.key;

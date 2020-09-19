@@ -1,7 +1,5 @@
 import React, {PureComponent} from "react";
 import {TouchableOpacity, View} from "react-native";
-import {connect} from "react-redux";
-import {useDispatch} from "react-redux";
 
 import {Ionicons} from '@expo/vector-icons';
 import {Song} from "../../../store/songs/types";
