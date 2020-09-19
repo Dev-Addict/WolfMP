@@ -7,8 +7,6 @@ import SongsScreen from "../screens/Main/SongsScreen";
 import AlbumsScreen from "../screens/Main/AlbumsScreen";
 import ArtistsScreen from "../screens/Main/ArtistsScreen";
 import GenresScreen from "../screens/Main/GenresScreen";
-import PlaylistsScreen from "../screens/Main/PlaylistsScreen";
-import SettingsScreen from "../screens/Main/SettingsScreen";
 
 type StackProps = {
     isFav?: boolean;
@@ -97,14 +95,8 @@ const SideTabNavigation = () => {
             <SideTabNavigator.Screen name="Genres" component={Genres} options={{
                 icon: ({color, size}) => (<FontAwesome5 name="compact-disc" size={size} color={color}/>)
             }}/>
-            <SideTabNavigator.Screen name="Playlists" component={PlaylistsScreen} options={{
-                icon: ({color, size}) => (<MaterialCommunityIcons name="playlist-music" size={size} color={color}/>)
-            }}/>
             <SideTabNavigator.Screen name="Favorites" component={FavoritesNavigation} options={{
                 icon: ({color, size}) => (<MaterialIcons name="favorite" size={size} color={color}/>)
-            }}/>
-            <SideTabNavigator.Screen name="Settings" component={SettingsScreen} options={{
-                icon: ({color, size}) => (<MaterialIcons name="settings" size={size} color={color}/>)
             }}/>
         </SideTabNavigator.Navigator>
     );
